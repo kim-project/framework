@@ -1,0 +1,29 @@
+<?php
+
+require 'Service/Autoload.php';
+
+switch (strtolower($argv[1])) {
+    case 'start':
+    case 's':
+    case 'serve':
+        \Kim\Support\Provider\Commands::Start();
+        break;
+
+    case 'make:c':
+    case 'make:controller':
+    case 'm:controller':
+        \Kim\Support\Provider\Commands::CreateController();
+        break;
+
+    case 'make:m':
+    case 'make:model':
+    case 'm:model':
+        \Kim\Support\Provider\Commands::CreateModel();
+        break;
+
+    case 'make:v':
+    case 'make:view':
+    case 'm:view':
+        \Kim\Support\Provider\Commands::CreateView();
+        break;
+}

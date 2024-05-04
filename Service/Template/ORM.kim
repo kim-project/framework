@@ -1,0 +1,12 @@
+<?php
+
+namespace namespace:;
+
+use Kim\Support\Database\DB;
+use Kim\Support\Database\Model;
+
+class name: extends Model {
+    
+    protected string \$table = 'table:';
+
+}
