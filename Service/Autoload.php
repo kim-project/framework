@@ -21,10 +21,10 @@ class Autoload
     {
         $path = self::parseClassName($class);
         if ($path[0] == 'app') {
-            return $class.'.php';
+            return implode('/', $path).'.php';
         } elseif ($path[0] == 'Kim') {
             if ($path[1] == 'Service' || $path[1] == 'Support') {
-                return 'Service/'.implode('\\', array_slice($path, 2)).'.php';
+                return 'Service/'.implode('/', array_slice($path, 2)).'.php';
             }
 
             return null;
@@ -33,7 +33,7 @@ class Autoload
         return null;
     }
 
-    public static function register()
+    public static function register(): void
     {
         spl_autoload_register(function (string $class) {
             if ($path = self::getClass($class)) {

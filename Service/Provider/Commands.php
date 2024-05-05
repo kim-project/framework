@@ -38,7 +38,7 @@ class Commands
         fclose($myfile);
     }
 
-    public static function CreateController()
+    public static function CreateController(): void
     {
         echo "\n\x1b[33m[\x1b[36m  Making a controller \x1b[33m]\n\n\n\x1b[38;5;225m";
         $parse = self::parseName(readline("\x1b[35mEnter Controller Name\x1b[33m:").'Controller', 'Controllers');
@@ -58,7 +58,7 @@ class Commands
         echo "\x1b[37mCreated Successfully.\n\x1b[0m";
     }
 
-    public static function CreateModel()
+    public static function CreateModel(): void
     {
         echo "\n\x1b[33m[\x1b[36m  Making a model \x1b[33m]\n\n\n\x1b[38;5;225m";
         $parse = self::parseName(readline("\x1b[35mEnter Model Name\x1b[33m:"), 'Models');
@@ -80,7 +80,7 @@ class Commands
         echo "\x1b[37mCreated Successfully.\n\x1b[0m";
     }
 
-    public static function CreateView()
+    public static function CreateView(): void
     {
         echo "\n\x1b[33m[\x1b[36m  Making a View \x1b[33m]\n\n\n\x1b[38;5;225m";
         $parse = self::parseName(readline("\x1b[35mEnter View Name\x1b[33m:"), 'Views');
@@ -98,7 +98,7 @@ class Commands
         echo "\x1b[37mCreated Successfully.\n\x1b[0m";
     }
 
-    public static function Start()
+    public static function Start(): void
     {
         echo "\n\nStarting Server...\n\n";
         shell_exec('php -S localhost:8000 app.php');

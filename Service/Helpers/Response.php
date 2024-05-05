@@ -6,16 +6,13 @@ use Kim\Support\Database\DB;
 
 class Response
 {
-    private int $status = 200;
-
     public function __construct(int $status)
     {
-        $this->status = $status;
+        http_response_code($status);
     }
 
-    private function exit()
+    private function exit(): void
     {
-        http_response_code($this->status);
         DB::close();
         exit;
     }
@@ -25,9 +22,8 @@ class Response
      *
      * @param  string  $view  The view file path in the View Folder
      * @param  array  $data  The data to be passed to the View
-     * @return void
      */
-    public function View(string $view, array $data)
+    public function View(string $view, array $data): void
     {
         if (substr($view, 0, 1) == '/') {
             $view = substr($view, 1);
@@ -45,9 +41,8 @@ class Response
      * Response a String
      *
      * @param  mixed  $res  The content to return
-     * @return void
      */
-    public function String(mixed $res)
+    public function String(mixed $res): void
     {
         echo $res;
         $this->exit();
@@ -57,9 +52,8 @@ class Response
      * Response a Json output
      *
      * @param  array|Arrayable  $res  The content to json encode
-     * @return void
      */
-    public function Json(array|Arrayable $res)
+    public function Json(array|Arrayable $res): void
     {
         if (is_array($res)) {
             echo json_encode($res);

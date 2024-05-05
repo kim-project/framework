@@ -19,8 +19,8 @@ class DB
      */
     public static function connect(string $host, string $username, string $password, string $database): void
     {
-        if (DB::$connection) {
-            throw new \Exception('Connection Exists.', 503);
+        if (isset(DB::$connection)) {
+            throw new \Exception('Connection Exists.');
         }
         DB::$connection = new \mysqli($host, $username, $password, $database);
         if (DB::$connection->connect_error) {

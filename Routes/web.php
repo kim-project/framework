@@ -4,6 +4,9 @@ use app\Controllers\UserController;
 use Kim\Service\Router\Route;
 use Kim\Service\Router\Router;
 
+Router::get('/', function () {
+    response()->View('home.php', []);
+});
 Router::controller('/', UserController::class, [
     Route::get('/login', 'getLogin'),
     Route::post('/login', 'login'),
