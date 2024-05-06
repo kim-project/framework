@@ -1,5 +1,7 @@
 <?php
 
+define('__ROOT__', __DIR__);
+
 require 'Service/Autoload.php';
 
 if (php_sapi_name() == 'cli-server') {
@@ -11,13 +13,8 @@ if (php_sapi_name() == 'cli-server') {
         }
     }
 }
-/*
-$DBInfo = [
-    'host' => 'localhost',
-    'username' => 'root',
-    'password' => 'password',
-    'database' => 'Kargah'
-];
-\Kim\Support\Helpers\DB::connect(...$DBInfo);
-*/
+
+loadEnv();
+
+# \Kim\Support\Database\DB::connect();
 \Kim\Service\Router\Server::startServer();

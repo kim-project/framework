@@ -7,8 +7,10 @@ use Kim\Support\Helpers\Response;
  * Get the error message of the error code
  *
  * @param  int  $error_code  http error code
+ *
+ * @return string|null
  */
-function get_error_message(int $error_code): ?string
+function get_error_message(int $error_code): string|null
 {
     $codes = [
         400 => 'Bad Request',
@@ -36,6 +38,8 @@ function get_error_message(int $error_code): ?string
  * @param  int  $status  status code of the response
  * @param  string  $message  error message if the status code is an error
  * @param  bool  $api  if the error should be json
+ *
+ * @return Response
  */
 function response(int $status = 200, string $message = '', bool $api = false): Response
 {
@@ -61,9 +65,10 @@ function response(int $status = 200, string $message = '', bool $api = false): R
  * Redirect to url
  *
  * @param  string  $url  The url to redirect to
- * @return Response
+ *
+ * @return void
  */
-function redirect(string $url)
+function redirect(string $url): void
 {
     header("Location: $url");
     exit();
@@ -74,6 +79,8 @@ function redirect(string $url)
  *
  * @param  string  $path  The path in which the file should be created
  * @param  string  $content  The content to put in the file
+ *
+ * @return File
  */
 function createFile(string $path, string $content = ''): File
 {
@@ -87,6 +94,8 @@ function createFile(string $path, string $content = ''): File
 
 /**
  * Check csrf token
+ *
+ * @return bool if the csrf is valid
  */
 function csrf(): bool
 {

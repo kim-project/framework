@@ -6,6 +6,8 @@ class File
 {
     /**
      * The path to file
+     *
+     * @var string
      */
     protected string $path;
 
@@ -24,6 +26,8 @@ class File
 
     /**
      * Get file's path
+     *
+     * @return string
      */
     public function path(): string
     {
@@ -32,6 +36,8 @@ class File
 
     /**
      * Get file's last modification time
+     *
+     * @return int|bool
      */
     public function lastModified(): int|bool
     {
@@ -40,6 +46,8 @@ class File
 
     /**
      * Get file's mime type
+     *
+     * @return string|false
      */
     public function mimeType(): string|bool
     {
@@ -48,6 +56,8 @@ class File
 
     /**
      * Get file's size in bytes
+     *
+     * @return int|false
      */
     public function size(): int|bool
     {
@@ -56,6 +66,8 @@ class File
 
     /**
      * Get file's name
+     *
+     * @return string
      */
     public function name(): string
     {
@@ -66,7 +78,8 @@ class File
      * write to file
      *
      * @param  mixed  $content  Content to write to file
-     * @return string
+     *
+     * @return int|false
      */
     public function write($content): int|bool
     {
@@ -75,6 +88,8 @@ class File
 
     /**
      * Read file content
+     *
+     * @return string|false
      */
     public function read(): string|bool
     {
@@ -83,6 +98,8 @@ class File
 
     /**
      * Read json file's content
+     *
+     * @return array
      */
     public function json(): array
     {
@@ -94,7 +111,7 @@ class File
      *
      * @return void
      */
-    public function download()
+    public function download(): void
     {
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
@@ -109,6 +126,8 @@ class File
 
     /**
      * Response the file
+     *
+     * @return void
      */
     public function response(): void
     {
@@ -118,18 +137,20 @@ class File
 
     /**
      * Generate path directories
+     *
+     * @return void
      */
     public static function checkFileDir(array $path): void
     {
         $path = array_slice($path, 0, -1);
         $i = count($path);
-        $subPath = implode('/', array_slice($path, 0, $i));
-        while (! is_dir($subPath)) {
+        $subPath = implode('/', array_slice($path, 0, $i)).'/';
+        while (! file_exists($subPath)) {
             $i--;
-            $subPath = implode('/', array_slice($path, 0, $i));
+            $subPath = implode('/', array_slice($path, 0, $i)).'/';
         }
-        for ($j = $i + 1; $j < count($path); $j++) {
-            $subPath .= $path[$i];
+        for ($i; $i < count($path); $i++) {
+            $subPath .= $path[$i].'/';
             mkdir($subPath);
         }
     }

@@ -8,19 +8,30 @@ abstract class Model extends Arrayable
 {
     /**
      * The table associated with the model.
+     *
+     * @var string
      */
     protected static string $table;
 
     /**
      * The array of model attributes.
+     *
+     * @var array
      */
     protected array $data;
 
     /**
      * The id of model.
+     *
+     * @var mixed
      */
     protected mixed $id;
 
+    /**
+     * The table fields.
+     *
+     * @var string
+     */
     protected static string $fields = '*';
 
     /**

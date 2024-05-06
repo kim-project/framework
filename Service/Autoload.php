@@ -6,6 +6,7 @@ class Autoload
 {
     private const FILES = [
         'Service/Support.php',
+        'Service/Env.php',
     ];
 
     private static function parseClassName(string $class): array

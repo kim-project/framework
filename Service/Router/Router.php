@@ -11,6 +11,8 @@ class Router
      * Response data
      *
      * @param  mixed  $response  Data to response
+     *
+     * @return void
      */
     private static function response(mixed $response): void
     {
@@ -27,6 +29,8 @@ class Router
      * create a controller instance
      *
      * @param  string  $class  The Controller class
+     *
+     * @return Controller
      */
     private static function getController(string $class): Controller
     {
@@ -44,6 +48,8 @@ class Router
      * @param  string  $prefix  The prefix for the controller routes prefix
      * @param  string  $class  The Controller class
      * @param  array  $routes  Array of routes defined with Route::$method()
+     *
+     * @return void
      */
     public static function controller(string $prefix, string $class, array $routes): void
     {
@@ -72,6 +78,8 @@ class Router
      * @param  array|string  $method  string or an array of valid method(s)
      * @param  string  $route  The route to handle
      * @param  array|callable  $fun  A callable function or an array of a controller class and a function name
+     *
+     * @return void
      */
     public static function route(array|string $method, string $route, array|callable $fun): void
     {
@@ -98,6 +106,8 @@ class Router
      *
      * @param  string  $route  The route to handle
      * @param  array|callable  $fun  A callable function or an array of a controller class and a function name
+     *
+     * @return void
      */
     public static function get(string $route, array|callable $fun): void
     {
@@ -109,6 +119,8 @@ class Router
      *
      * @param  string  $route  The route to handle
      * @param  array|callable  $fun  A callable function or an array of a controller class and a function name
+     *
+     * @return void
      */
     public static function post(string $route, array|callable $fun): void
     {
@@ -120,6 +132,8 @@ class Router
      *
      * @param  string  $route  The route to handle
      * @param  array|callable  $fun  A callable function or an array of a controller class and a function name
+     *
+     * @return void
      */
     public static function put(string $route, array|callable $fun): void
     {
@@ -131,6 +145,8 @@ class Router
      *
      * @param  string  $route  The route to handle
      * @param  array|callable  $fun  A callable function or an array of a controller class and a function name
+     *
+     * @return void
      */
     public static function delete(string $route, array|callable $fun): void
     {
@@ -142,6 +158,8 @@ class Router
      *
      * @param  string  $route  The route to handle
      * @param  array|callable  $fun  A callable function or an array of a controller class and a function name
+     *
+     * @return void
      */
     public static function any(string $route, array|callable $fun): void
     {

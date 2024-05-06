@@ -47,10 +47,12 @@ class Commands
             $parse['path'],
             [
                 'namespace:',
+                'use:',
                 'name:',
             ],
             [
                 $parse['namespace'],
+                $parse['namespace'] == 'app\Controllers' ? '' : "\n\nuse app\Controllers\Controller;",
                 $parse['name'],
             ],
             'Controller.kim'

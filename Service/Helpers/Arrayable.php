@@ -6,17 +6,26 @@ abstract class Arrayable
 {
     /**
      * convert object to array
+     *
+     * @return array
      */
     abstract public function toArray(): array;
 
     /**
      * convert object to Json
+     *
+     * @return string json encoded string
      */
     public function toJson(): string
     {
         return json_encode($this->toArray());
     }
 
+    /**
+     * get specified elements from array
+     *
+     * @return mixed|mixed[] element or array of elements
+     */
     protected static function getOnly(array|string|int $only, array $array): mixed
     {
         if (is_array($only)) {
@@ -28,6 +37,11 @@ abstract class Arrayable
         }
     }
 
+    /**
+     * get specified elements
+     *
+     * @return mixed|mixed[] element or array of elements
+     */
     public function only(array|string|int $only): mixed
     {
         return self::getOnly($only, $this->toArray());

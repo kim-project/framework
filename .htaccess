@@ -1,2 +1,4 @@
 RewriteEngine on
-RewriteRule !^public/ app.php [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(p|P)ublic/ app.php [QSA,L]
+RewriteRule !^(p|P)ublic/ app.php [QSA,L]

@@ -6,18 +6,22 @@ class Server
 {
     /**
      * The request route
+     *
+     * @var string[]
      */
     private static array $route;
 
     /**
      * The set prefix
      *
-     * @var array
+     * @var array|false
      */
     private static array|bool $prefix = [];
 
     /**
      * initialize the server
+     *
+     * @return void
      */
     private static function init(): void
     {
@@ -44,6 +48,11 @@ class Server
 
     /**
      * Handle errors
+     *
+     * @param \Throwable $th Error
+     * @param bool $isapi Show error in json format
+     *
+     * @return void
      */
     private static function error(\Throwable $th, bool $isapi = false): void
     {
@@ -68,6 +77,8 @@ class Server
 
     /**
      * Start router files and route handling
+     *
+     * @return void
      */
     public static function startServer(): void
     {
@@ -108,6 +119,8 @@ class Server
      * check method match
      *
      * @param  string|array  $method  String or array of method(s)
+     *
+     * @return bool
      */
     public static function checkMethod(string|array $method): bool
     {
@@ -131,7 +144,8 @@ class Server
      *
      * @param  string  $route  Route pattern to match
      * @param  bool  $exact  Check for full match or suffix match
-     * @return bool|array returns array of route params
+     *
+     * @return false|string[] returns array of route params
      */
     public static function checkRoute(string $route, bool $exact = true): bool|array
     {
@@ -175,6 +189,8 @@ class Server
 
     /**
      * Get current request's route
+     *
+     * @return string
      */
     public static function getRoute(): string
     {
@@ -183,6 +199,10 @@ class Server
 
     /**
      * Set Prefix for match
+     *
+     * @param string $prefix
+     *
+     * @return void
      */
     public static function setPrefix(string $prefix): void
     {
@@ -203,6 +223,8 @@ class Server
 
     /**
      * Get Prefix for match
+     *
+     * @return string
      */
     public static function getPrefix(): string
     {

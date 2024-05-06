@@ -6,11 +6,21 @@ use Kim\Support\Database\DB;
 
 class Response
 {
+    /**
+     * Create Response
+     *
+     * @param int $status Http status code of the response
+     */
     public function __construct(int $status)
     {
         http_response_code($status);
     }
 
+    /**
+     * Close the connection
+     *
+     * @return void
+     */
     private function exit(): void
     {
         DB::close();
@@ -22,6 +32,8 @@ class Response
      *
      * @param  string  $view  The view file path in the View Folder
      * @param  array  $data  The data to be passed to the View
+     *
+     * @return void
      */
     public function View(string $view, array $data): void
     {
@@ -41,6 +53,8 @@ class Response
      * Response a String
      *
      * @param  mixed  $res  The content to return
+     *
+     * @return void
      */
     public function String(mixed $res): void
     {
@@ -52,6 +66,8 @@ class Response
      * Response a Json output
      *
      * @param  array|Arrayable  $res  The content to json encode
+     *
+     * @return void
      */
     public function Json(array|Arrayable $res): void
     {

@@ -8,18 +8,22 @@ class File extends BaseFile
 {
     /**
      * The uploaded file name
+     *
+     * @var string
      */
     private string $name;
 
     /**
      * The uploaded file type
+     *
+     * @var string
      */
     private string $type;
 
     /**
      * The uploaded file size
      *
-     * @var string
+     * @var int
      */
     public int $size;
 
@@ -39,7 +43,8 @@ class File extends BaseFile
      *
      * @param  string  $path  The path in to save the file in
      * @param  bool  $toStorage  If you want to save the file outside the Storage folder set this to false
-     * @return int
+     *
+     * @return string|false
      */
     public function save(string $path, bool $toStorage = true): string|bool
     {
@@ -60,6 +65,8 @@ class File extends BaseFile
 
     /**
      * Get file's size in bytes
+     *
+     * @return int
      */
     public function size(): int
     {
@@ -68,6 +75,8 @@ class File extends BaseFile
 
     /**
      * Get file's uploaded name
+     *
+     * @return string
      */
     public function name(): string
     {
@@ -76,6 +85,8 @@ class File extends BaseFile
 
     /**
      * Get file's uploaded type
+     *
+     * @return string
      */
     public function type(): string
     {
