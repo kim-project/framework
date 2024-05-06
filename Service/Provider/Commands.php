@@ -105,4 +105,26 @@ class Commands
         echo "\n\nStarting Server...\n\n";
         shell_exec('php -S localhost:8000 app.php');
     }
+
+    public static function Update() : void {
+        $raw = 'https://raw.githubusercontent.com/kim-project/framework/master';
+        ini_set("allow_url_fopen", 1);
+        $rKim = file_get_contents($raw.'/Service/Kim.json');
+        $Kim = json_decode($rKim);
+        $curr = new File('/Service/Kim.json');
+        if ($Kim['version'] !== $Kim['version']) {
+            foreach ($Kim['files'] as $file) {
+                $cont = file_get_contents($raw.$file);
+                if (file_exists(__ROOT__.$file)) {
+                    $f = new File($file);
+                    if ($f->read() != $cont) {
+                        $f->write($cont);
+                    }
+                } else {
+                    createFile($file, $cont);
+                }
+            }
+        }
+        $curr->write(json_encode($rKim));
+    }
 }

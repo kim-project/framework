@@ -85,7 +85,7 @@ function redirect(string $url): void
 function createFile(string $path, string $content = ''): File
 {
     File::checkFileDir(array_filter(explode('/', $path)));
-    $file = fopen($path, 'x');
+    $file = fopen(__ROOT__.$path, 'x');
     fwrite($file, $content);
     fclose($file);
 

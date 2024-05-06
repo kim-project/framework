@@ -18,10 +18,10 @@ class File
      */
     public function __construct(string $path)
     {
-        if (! file_exists($path)) {
+        if (! file_exists(__ROOT__.$path)) {
             throw new \Exception("File $path Not Found", 503);
         }
-        $this->path = $path;
+        $this->path = __ROOT__.$path;
     }
 
     /**
@@ -131,6 +131,8 @@ class File
      */
     public function response(): void
     {
+        header("Content-Type: ".$this->mimeType());
+        header("Content-Length:".$this->size());
         readfile($this->path);
         exit;
     }

@@ -26,4 +26,10 @@ switch (strtolower($argv[1])) {
     case 'm:view':
         \Kim\Support\Provider\Commands::CreateView();
         break;
+
+    case 'update':
+        case 'upgrade':
+        case 'u':
+            \Kim\Support\Provider\Commands::Update();
+            break;
 }

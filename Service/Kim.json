@@ -1,0 +1,32 @@
+{
+    "version": "0.5.0",
+    "files": [
+        "/.env.example",
+        "/.htaccess",
+        "/app.php",
+        "/config.php",
+        "/Kim",
+        "/.gitignore",
+        "/Service/Autoload.php",
+        "/Service/Support.php",
+        "/Service/Env.php",
+        "/Service/Database/DB.php",
+        "/Service/Helpers/Arrayable.php",
+        "/Service/Helpers/Config.php",
+        "/Service/Helpers/File.php",
+        "/Service/Helpers/Response.php",
+        "/Service/Provider/Commands.php",
+        "/Service/Provider/Controller.php",
+        "/Service/Provider/Model.php",
+        "/Service/Request/File.php",
+        "/Service/Request/Request.php",
+        "/Service/Request/Validator.php",
+        "/Service/Router/Route.php",
+        "/Service/Router/Router.php",
+        "/Service/Router/Server.php",
+        "/Service/Template/Controller.kim",
+        "/Service/Template/Model.kim",
+        "/Service/Template/ORM.kim",
+        "/Service/Template/View.kim"
+    ]
+}
