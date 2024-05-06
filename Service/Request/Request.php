@@ -27,7 +27,7 @@ class Request extends Arrayable
 
             $this->request = $_POST;
             $this->files = array_map(function ($item) {
-                return new File(...$item);
+                return new UploadedFile(...$item);
             }, $_FILES);
 
         } elseif ($_SERVER['REQUEST_METHOD'] != 'GET') {
@@ -74,7 +74,7 @@ class Request extends Arrayable
         return $result;
     }
 
-    public function file(string|array $field): ?File
+    public function file(string|array $field): ?UploadedFile
     {
         return self::getOnly($field, $this->files);
     }

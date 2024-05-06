@@ -54,3 +54,16 @@ now the project is running on `127.0.0.1:8000`
 ### Using Apache (XAMPP)
 
 To use `Apache` (`XAMPP`) put it in the server's root http directory (Usually `htdocs`) and the code should be running fine on the `127.0.0.1`
+
+## Updating
+
+You can update the framework for patches and bug fixes through the following command
+```bash
+php Kim update
+```
+or use one of its alias commands
+```bash
+php Kim upgrade
+php Kim u
+```
+now wait for the update to complete and you are good to go

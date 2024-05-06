@@ -1,9 +1,8 @@
 {
-    "version": "0.5.3",
+    "version": "0.5.4",
     "files": [
         "/.env.example",
         "/.htaccess",
-        "/app.php",
         "/config.php",
         "/Kim",
         "/.gitignore",
@@ -18,7 +17,7 @@
         "/Service/Provider/Commands.php",
         "/Service/Provider/Controller.php",
         "/Service/Provider/Model.php",
-        "/Service/Request/File.php",
+        "/Service/Request/UploadedFile.php",
         "/Service/Request/Request.php",
         "/Service/Request/Validator.php",
         "/Service/Router/Route.php",

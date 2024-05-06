@@ -2,9 +2,9 @@
 
 namespace Kim\Service\Request;
 
-use Kim\Support\Helpers\File as BaseFile;
+use Kim\Support\Helpers\File;
 
-class File extends BaseFile
+class UploadedFile extends File
 {
     /**
      * The uploaded file name
