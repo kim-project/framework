@@ -132,6 +132,7 @@ class Commands
                     createFile($file, $cont);
                     echo " done\n";
                 }
+                $i++;
             }
             echo "\n\n\x1b[37mUpating Kim Version!";
             $curr->write($rKim);
