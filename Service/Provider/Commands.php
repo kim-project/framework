@@ -123,12 +123,12 @@ class Commands
                 if (file_exists(__ROOT__.$file)) {
                     $f = new File($file);
                     if ($f->read() != $cont) {
-                        echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[38;5;225mUpdating file '\x1b[33m$file\x1b[38;5;225m'...";
+                        echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[36mUpdating file '\x1b[33m$file\x1b[36m'...";
                         $f->write($cont);
                         echo " done\n";
                     }
                 } else {
-                    echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[38;5;225mCreating file '\x1b[33m$file\x1b[38;5;225m'...";
+                    echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[36mCreating file '\x1b[33m$file\x1b[36m'...";
                     createFile($file, $cont);
                     echo " done\n";
                 }
