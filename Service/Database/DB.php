@@ -32,37 +32,38 @@ class DB
         $database = config('db_database');
         if(config('db_mysqli')) {
             $port = env('DB_PORT', 3306);
-        DB::$connection = new \mysqli($host, $username, $password, $database, $port);
-        if (DB::$connection->connect_error) {
-            exit('Connection failed: '.DB::$connection->connect_error);
-        }
-    } else {
-        try {
-            switch (config('db_type')) {
-                case 'sqlite':
-                    DB::$connection = new \PDO("sqlite:".config('sqlite_path'));
-                    break;
-
-                case 'pgsql':
-                    $port = env('DB_PORT', 5432);
-                    DB::$connection = new \PDO("pgsql:host=$host;port=$port;dbname=$database;user=$username;password=$password");
-                    break;
-
-                case 'mysql':
-                    $port = env('DB_PORT', 3306);
-                    DB::$connection = new \PDO("mysql:host=$host;port=$port;dbname=$database", $username, $password);
-
-                case 'sqlsrv':
-                    $port = env('DB_PORT', 1433);
-                    DB::$connection = new \PDO("sqlsrv:Server=$host,$port;Database=$database", $username, $password);
-
+            DB::$connection = new \mysqli($host, $username, $password, $database, $port);
+            if (DB::$connection->connect_error) {
+                exit('Connection failed: '.DB::$connection->connect_error);
             }
-            // set the PDO error mode to exception
-            DB::$connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        } catch(\PDOException $e) {
-            exit('Connection failed: '.$e->getMessage());
+        } else {
+            try {
+                switch (config('db_type')) {
+                    case 'sqlite':
+                        DB::$connection = new \PDO("sqlite:".config('sqlite_path'));
+                        break;
+
+                    case 'pgsql':
+                        $port = env('DB_PORT', 5432);
+                        DB::$connection = new \PDO("pgsql:host=$host;port=$port;dbname=$database;user=$username;password=$password");
+                        break;
+
+                    case 'mysql':
+                        $port = env('DB_PORT', 3306);
+                        DB::$connection = new \PDO("mysql:host=$host;port=$port;dbname=$database", $username, $password);
+
+                        // no break
+                    case 'sqlsrv':
+                        $port = env('DB_PORT', 1433);
+                        DB::$connection = new \PDO("sqlsrv:Server=$host,$port;Database=$database", $username, $password);
+
+                }
+                // set the PDO error mode to exception
+                DB::$connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            } catch(\PDOException $e) {
+                exit('Connection failed: '.$e->getMessage());
+            }
         }
-    }
     }
 
     /**

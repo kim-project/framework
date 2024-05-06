@@ -2,7 +2,8 @@
 
 use Kim\Support\Helpers\Config;
 
-function loadEnv():void {
+function loadEnv(): void
+{
     $conf = parse_ini_file(__ROOT__.'/.env');
     foreach ($conf as $key => $val) {
         if(isset($val) && $val != '') {
@@ -13,7 +14,8 @@ function loadEnv():void {
     }
 }
 
-function env(string $key, mixed $default = null): mixed {
+function env(string $key, mixed $default = null): mixed
+{
     if(isset($_ENV[$key])) {
         return $_ENV[$key];
     } else {
@@ -21,6 +23,7 @@ function env(string $key, mixed $default = null): mixed {
     }
 }
 
-function config(string $key) : mixed {
+function config(string $key): mixed
+{
     return Config::getConfig($key);
 }

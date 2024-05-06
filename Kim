@@ -1,5 +1,7 @@
 <?php
 
+define('__ROOT__', __DIR__);
+
 require 'Service/Autoload.php';
 
 switch (strtolower($argv[1])) {

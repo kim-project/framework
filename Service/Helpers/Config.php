@@ -6,11 +6,13 @@ class Config
 {
     private static array $config;
 
-    private static function buildConfig():void {
+    private static function buildConfig(): void
+    {
         self::$config = include __ROOT__.'/config.php';
     }
 
-    public static function getConfig(string $key) : mixed {
+    public static function getConfig(string $key): mixed
+    {
         if(!isset(self::$config)) {
             self::buildConfig();
         }

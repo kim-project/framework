@@ -106,25 +106,38 @@ class Commands
         shell_exec('php -S localhost:8000 app.php');
     }
 
-    public static function Update() : void {
+    public static function Update(): void
+    {
         $raw = 'https://raw.githubusercontent.com/kim-project/framework/master';
         ini_set("allow_url_fopen", 1);
         $rKim = file_get_contents($raw.'/Service/Kim.json');
-        $Kim = json_decode($rKim);
+        $Kim = json_decode($rKim, true);
         $curr = new File('/Service/Kim.json');
-        if ($Kim['version'] !== $Kim['version']) {
+        if ($Kim['version'] !== $curr->json()['version']) {
+            echo "\n\x1b[33m[\x1b[36m  Updating Kim \x1b[33m]\n\n\n";
+            $i = 1;
+            $count = count($Kim['files']);
             foreach ($Kim['files'] as $file) {
+                echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[0mChecking file '\x1b[33m$file\x1b[0m'...\n";
                 $cont = file_get_contents($raw.$file);
                 if (file_exists(__ROOT__.$file)) {
                     $f = new File($file);
                     if ($f->read() != $cont) {
+                        echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[38;5;225mUpdating file '\x1b[33m$file\x1b[38;5;225m'...";
                         $f->write($cont);
+                        echo " done\n";
                     }
                 } else {
+                    echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[38;5;225mCreating file '\x1b[33m$file\x1b[38;5;225m'...";
                     createFile($file, $cont);
+                    echo " done\n";
                 }
             }
+            echo "\n\n\x1b[37mUpating Kim Version!";
+            $curr->write($rKim);
+            echo "\n\n\x1b[37mKim Updated Successfully!\n\n\n\x1b[0m";
+        } else {
+            echo "\n\n\n\x1b[33m[\x1b[36m  Kim is up to date! \x1b[33m]\n\n\n\x1b[0m";
         }
-        $curr->write(json_encode($rKim));
     }
 }
