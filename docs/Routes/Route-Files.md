@@ -1,5 +1,7 @@
 # Route Files
+
 There is a `Routes/` directory in the project directory with two files which handle our routes in the server
+
 ```
 ├───app
 ├───database
@@ -11,12 +13,16 @@ There is a `Routes/` directory in the project directory with two files which han
 ├───Service
 └───storage
 ```
+
 - `api.php` is for api routes which start with `/api/` suffix
 - `web.php` is for other general routes
+
+-----
 
 ## What do they do
 
 Route Files have the following Structure
+
 ```php
 <?php
 
@@ -34,4 +40,5 @@ Router::controller('/', UserController::class, [
     Route::post('/signup', 'signup'),
 ]);
 ```
+
 They are a bunch of rules with patterns that if the request `url` matches any of this patterns they will handle the request by the `function` or `method` passed to them and won't continue the code and check the other rules

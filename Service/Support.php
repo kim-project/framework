@@ -93,6 +93,21 @@ function createFile(string $path, string $content = ''): File
 }
 
 /**
+ * Get a File
+ *
+ * @param  string  $path  The path in which the file should be created
+ *
+ * @return File
+ */
+function getFile(string $path): ?File
+{
+    if (file_exists($path))
+        return new File($path);
+    else
+        return null;
+}
+
+/**
  * Check csrf token
  *
  * @return bool if the csrf is valid

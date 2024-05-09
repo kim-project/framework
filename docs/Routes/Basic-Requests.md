@@ -2,6 +2,8 @@
 
 These requests handles requests by passing a function
 
+-----
+
 ## GET
 
 Handles if there is `GET` request to the `/route` route and runs the given function
@@ -11,9 +13,9 @@ Router::get('/route', function () {
     ...
 });
 ```
+
 - **first param:** route pattern
 - **second param:** function to run
-
 
 ## POST
 
@@ -24,9 +26,9 @@ Router::post('/route', function () {
     ...
 });
 ```
+
 - **first param:** route pattern
 - **second param:** function to run
-
 
 ## PUT
 
@@ -37,9 +39,9 @@ Router::put('/route', function () {
     ...
 });
 ```
+
 - **first param:** route pattern
 - **second param:** function to run
-
 
 ## DELETE
 
@@ -50,6 +52,7 @@ Router::delete('/route', function () {
     ...
 });
 ```
+
 - **first param:** route pattern
 - **second param:** function to run
 
@@ -62,6 +65,7 @@ Router::route(['GET', 'PUT'], '/route', function () {
     ...
 });
 ```
+
 - **first param:** array of valid methods
 - **second param:** route pattern
 - **third param:** function to run
@@ -75,5 +79,6 @@ Router::any('/route', function () {
     ...
 });
 ```
+
 - **first param:** route pattern
 - **second param:** function to run
