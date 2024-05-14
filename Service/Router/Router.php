@@ -3,10 +3,21 @@
 namespace Kim\Service\Router;
 
 use Kim\Support\Database\DB;
+use Kim\Support\Helpers\Arrayable;
+use Kim\Support\Helpers\File;
 use Kim\Support\Provider\Controller;
 
 class Router
 {
+    private static function parseParam(\ReflectionMethod|\ReflectionFunction $f, array $data): array
+    {
+        $result = array();
+        foreach ($f->getParameters() as $param) {
+            $result[$param->name] = $data[$param->name];
+        }
+        return $result;
+    }
+
     /**
      * Response data
      *
@@ -16,7 +27,12 @@ class Router
      */
     private static function response(mixed $response): void
     {
-        if (is_array($response) || is_object($response)) {
+        if ($response instanceof Arrayable) {
+            $response = $response->toArray();
+        }
+        if($response instanceof File) {
+            $response->response();
+        } elseif (is_array($response) || is_object($response)) {
             echo json_encode($response);
         } else {
             echo $response;
@@ -67,7 +83,7 @@ class Router
             }
             $function = $value['function'];
             $obj = self::getController($class);
-            $res = $obj->$function(...$route);
+            $res = $obj->$function(...self::parseParam(new \ReflectionMethod($obj, $function), $route));
             Router::response($res);
         }
     }
@@ -94,9 +110,9 @@ class Router
         if (is_array($fun)) {
             $obj = self::getController($fun[0]);
             $function = $fun[1];
-            $res = $obj->$function(...$route);
+            $res = $obj->$function(...self::parseParam(new \ReflectionMethod($obj, $function), $route));
         } else {
-            $res = $fun(...$route);
+            $res = $fun(...self::parseParam(new \ReflectionFunction($fun), $route));
         }
         Router::response($res);
     }

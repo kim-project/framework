@@ -7,6 +7,8 @@ use Kim\Support\Helpers\Arrayable;
 
 class Request extends Arrayable
 {
+    private static array $php_input;
+
     private array $files = [];
 
     private array $query = [];
@@ -32,7 +34,7 @@ class Request extends Arrayable
 
         } elseif ($_SERVER['REQUEST_METHOD'] != 'GET') {
 
-            $this->request = self::parseInput(file_get_contents('php://input'));
+            $this->request = self::parseInput();
 
         }
 
@@ -57,21 +59,25 @@ class Request extends Arrayable
         $this->headers = $headers;
     }
 
-    private static function parseInput(string $raw): array
+    public static function parseInput(): array
     {
-        $result = [];
+        if(!isset(self::$php_input)) {
+            $result = [];
+            $raw = file_get_contents('php://input');
 
-        switch (explode(';', $_SERVER['CONTENT_TYPE'])[0]) {
-            case 'application/json':
-                $result = json_decode($raw, true);
-                break;
+            switch (explode(';', $_SERVER['CONTENT_TYPE'])[0]) {
+                case 'application/json':
+                    $result = json_decode($raw, true);
+                    break;
 
-            case 'application/x-www-form-urlencoded':
-                parse_str($raw, $result);
-                break;
+                case 'application/x-www-form-urlencoded':
+                    parse_str($raw, $result);
+                    break;
+            }
+
+            self::$php_input = $result;
         }
-
-        return $result;
+        return self::$php_input;
     }
 
     public function file(string|array $field): ?UploadedFile
@@ -79,9 +85,19 @@ class Request extends Arrayable
         return self::getOnly($field, $this->files);
     }
 
+    public function files(): array
+    {
+        return $this->files;
+    }
+
     public function query(string|array $field): mixed
     {
         return self::getOnly($field, $this->query);
+    }
+
+    public function queries(): array
+    {
+        return $this->query;
     }
 
     public function input(string|array $field): mixed
@@ -97,6 +113,11 @@ class Request extends Arrayable
     public function header(string $header): mixed
     {
         return self::getOnly($header, $this->headers);
+    }
+
+    public function headers(): array
+    {
+        return $this->headers;
     }
 
     public function validate(array $rules): Validator

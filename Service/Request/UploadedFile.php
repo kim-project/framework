@@ -21,13 +21,20 @@ class UploadedFile extends File
     private string $type;
 
     /**
+     * The uploaded file full_path
+     *
+     * @var string
+     */
+    private string $full_path;
+
+    /**
      * The uploaded file size
      *
      * @var int
      */
     public int $size;
 
-    public function __construct(string $name, string $type, string $tmp_name, int $error, int $size)
+    public function __construct(string $name, string $type, string $tmp_name, int $error, int $size, string $full_path)
     {
         if ($error) {
             throw new \Exception('Bad Request', 400);
@@ -36,6 +43,7 @@ class UploadedFile extends File
         $this->type = $type;
         $this->path = $tmp_name;
         $this->size = $size;
+        $this->full_path = $full_path;
     }
 
     /**

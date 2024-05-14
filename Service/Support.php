@@ -101,10 +101,11 @@ function createFile(string $path, string $content = ''): File
  */
 function getFile(string $path): ?File
 {
-    if (file_exists($path))
+    if (file_exists($path)) {
         return new File($path);
-    else
+    } else {
         return null;
+    }
 }
 
 /**

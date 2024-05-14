@@ -2,6 +2,8 @@
 
 namespace Kim\Service\Router;
 
+use Kim\Service\Request\Request;
+
 class Server
 {
     /**
@@ -17,6 +19,13 @@ class Server
      * @var array|false
      */
     private static array|bool $prefix = [];
+
+    /**
+     * The request
+     *
+     * @var Request
+     */
+    private static Request $request;
 
     /**
      * initialize the server
@@ -44,6 +53,17 @@ class Server
         }
 
         define('CSRF', "<input type=\"hidden\" name=\"token\" value=\"{$_SESSION['csrf']}\">");
+
+        //Request Handlers
+        self::$request = new Request();
+
+        $GLOBALS['_PUT'] = [];
+        $GLOBALS['_DELETE'] = [];
+        if(self::checkMethod('put')) {
+            $GLOBALS['_PUT'] = Request::parseInput();
+        } elseif (self::checkMethod('delete')) {
+            $GLOBALS['_DELETE'] = Request::parseInput();
+        }
     }
 
     /**
@@ -60,7 +80,6 @@ class Server
 
         if ($code < 400) {
 
-            fwrite(STDERR, "\n".$th->getMessage());
             Response(503, $th->getMessage(), $isapi);
 
         } else {
@@ -160,7 +179,10 @@ class Server
         $request = array_values(
             array_diff_assoc(self::$route, self::$prefix)
         );
-        $data = [];
+
+        $data = [
+            'request' => self::$request
+        ];
 
         if (count($route) > count($request)) {
             return false;
@@ -194,7 +216,7 @@ class Server
      */
     public static function getRoute(): string
     {
-        return '/'.implode('/', array_diff_assoc(self::$route, self::$prefix));
+        return '/'.implode('/', self::$route);
     }
 
     /**
