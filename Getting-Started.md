@@ -12,7 +12,7 @@ git clone https://github.com/kim-project/framework.git
 
 After the command is complete you will see a `framework` Folder  
   
-- Delete the `docs` and `.git` folder inside the `framwork` folder
+- Delete the `.git` folder inside the `framwork` folder
 - Copy the `.env.example` file to the `.env` file using the following command in the terminal in the folder
 
     ```bash
@@ -29,7 +29,6 @@ Go to our Github Page [Kim Framework](https://github.com/kim-project/framework.g
   
 After the download was complete extract it and do the following in the extracted folder
   
-- Delete the `docs` folder inside the folder
 - Copy the `.env.example` file to the `.env` file using the following command in the terminal in the folder
 
     ```bash
