@@ -1,5 +1,12 @@
 # Using Core PHP
 
+- [Introduction](#introduction)
+- [New Globals](#new-globals)
+  - [PUT](#put)
+  - [DELETE](#delete)
+
+## Introduction
+
 As you probably already know php has superglobals for handling request inputs (`$_GET`, `$_POST`, `$_FILES`, `$_COOKIE`, `$_SESSION`, `$_REQUEST`)  
 
 But there aren't any superglobals for `PUT` and `DELETE` methods  
@@ -10,7 +17,9 @@ So we added our own globals (they aren't superglobals you have to use the `globa
 
 -----
 
-## PUT
+## New Globals
+
+### PUT
 
 You make the global variable accessible by using `global $_PUT;` to make the variable available in the method
 
@@ -28,9 +37,7 @@ public function demo () {
 ...
 ```
 
------
-
-## DELETE
+### DELETE
 
 You make the global variable accessible by using `global $_DELETE;` to make the variable available in the method
 

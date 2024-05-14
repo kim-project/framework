@@ -1,5 +1,13 @@
 # Getting Started
 
+- [Installation](#installation)
+  - [Using git](#using-git)
+  - [Manually](#manually)
+- [Starting Server](#starting-server)
+  - [Using Kim Command](#using-kim-command)
+  - [Using Apache (XAMPP)](#using-apache-xampp)
+- [Updating](#updating)
+
 ## Installation
 
 ### Using git

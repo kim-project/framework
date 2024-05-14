@@ -1,5 +1,20 @@
 # Files
 
+- [Introduction](#introduction)
+- [File Methods](#file-methods)
+  - [Read](#read)
+  - [Write](#write)
+  - [Json](#json)
+  - [Path](#path)
+  - [Mime Type](#mime-type)
+  - [Size](#size)
+  - [Name](#name)
+  - [Last Modified](#last-modified)
+- [Response](#response)
+- [Download](#download)
+
+## Introduction
+
 You can use Kim's built-in File handler
 
 To start using it you can use the following line to open a file
@@ -90,7 +105,7 @@ return file's name
 $name = $file->name();
 ```
 
-### LastModified
+### Last Modified
 
 return file's last modification date
 

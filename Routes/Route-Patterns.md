@@ -12,3 +12,5 @@ Router::get('/post/:postid', function ($postid) {
 ```
 
 For example if there's a request to `/post/123` the `123` will be passed to function in the `$postid` variable
+
+Another example for `Controllers` can be found in the [Requests](Controllers/Requests.md) page

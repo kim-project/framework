@@ -1,5 +1,10 @@
 # Route Files
 
+- [Introduction](#introduction)
+- [What do they do](#what-do-they-do)
+
+## Introduction
+
 There is a `Routes/` directory in the project directory with two files which handle our routes in the server
 
 ```

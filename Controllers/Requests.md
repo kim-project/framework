@@ -4,8 +4,6 @@ The main purpose of controllers are handling requests by their methods (or using
 
 -----
 
-### Passing Route Parameters
-
 **`app/Controllers/PostController.php`**
 
 ```php

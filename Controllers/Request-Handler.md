@@ -1,5 +1,14 @@
 # Kim's Request Handler
 
+- [Introduction](#introduction)
+- [Using request handler](#using-request-handler)
+- [Methods](#methods)
+  - [Inputs](#inputs)
+  - [Query Parameters](#query-parameters)
+  - [Files](#files)
+
+## Introduction
+
 You can use the framework's request handler for easier access to the inputs
 
 -----
@@ -39,11 +48,13 @@ Now let's get started with using the request handler
 
 -----
 
-## Inputs
+## Methods
+
+### Inputs
 
 You can get the request's body and fields using the handler (this will show body from the `POST`,`PUT`, `DELETE` methods)
 
-### Getting specific field
+#### Getting specific field
 
 ```php
 public function demo (Request $request) {
@@ -55,7 +66,7 @@ public function demo (Request $request) {
   
 This will get the field `username` from the body
   
-### Getting multiple fields
+#### Getting multiple fields
 
 You can also get multiple fields at once
 
@@ -71,7 +82,7 @@ public function demo (Request $request) {
 
 This will result in `$credentials` being an associative array containing `username` and `password`
 
-### Getting all fields
+#### Getting all fields
 
 You can also get the whole input fields
 
@@ -87,11 +98,11 @@ public function demo (Request $request) {
 
 -----
 
-## Query Parameters
+### Query Parameters
 
 You can get the request's url parameters (`$_GET`'s content) like the following
 
-### Getting query parameters
+#### Getting query parameters
 
 ```php
 public function demo (Request $request) {
@@ -117,7 +128,7 @@ public function demo (Request $request) {
 
 This will result in `$query` being an associative array containing `page` and `limit` (eg. `localhost/posts?page=20&limit=10`)
 
-### Getting all parameters
+#### Getting all parameters
 
 You can also get the whole query parameters
 
@@ -133,11 +144,11 @@ public function demo (Request $request) {
 
 -----
 
-## Files
+### Files
 
 You can get the request's files sent by the user (This will return the uploaded files as the `\Kim\Service\Request\UploadedFile` class)
 
-### Getting specific files
+#### Getting specific files
 
 ```php
 public function demo (Request $request) {
@@ -163,7 +174,7 @@ public function demo (Request $request) {
 
 This will result in `$files` being an associative array containing `media` and `thumbnail` files
 
-### Getting all files
+#### Getting all files
 
 You can also get the whole query parameters
 

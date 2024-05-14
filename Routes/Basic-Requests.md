@@ -1,10 +1,23 @@
 # Basic Requests
 
-These requests handles requests by passing a function
+- [Introduction](#introduction)
+- [Methods](#methods)
+  - [GET](#get)
+  - [POST](#post)
+  - [PUT](#put)
+  - [DELETE](#delete)
+  - [Multiple](#multiple)
+  - [Any](#any)
+
+## Introduction
+
+These routers handles requests by passing a function
 
 -----
 
-## GET
+## Methods
+
+### GET
 
 Handles if there is `GET` request to the `/route` route and runs the given function
 
@@ -17,7 +30,7 @@ Router::get('/route', function () {
 - **first param:** route pattern
 - **second param:** function to run
 
-## POST
+### POST
 
 Handles if there is `POST` request to the `/route` route and runs the given function
 
@@ -30,7 +43,7 @@ Router::post('/route', function () {
 - **first param:** route pattern
 - **second param:** function to run
 
-## PUT
+### PUT
 
 Handles if there is `PUT` request to the `/route` route and runs the given function
 
@@ -43,7 +56,7 @@ Router::put('/route', function () {
 - **first param:** route pattern
 - **second param:** function to run
 
-## DELETE
+### DELETE
 
 Handles if there is `DELETE` request to the `/route` route and runs the given function
 
@@ -56,7 +69,7 @@ Router::delete('/route', function () {
 - **first param:** route pattern
 - **second param:** function to run
 
-## Multiple
+### Multiple
 
 Handles if there is `GET` or `PUT` request to the `/route` route and runs the given function
 
@@ -70,7 +83,7 @@ Router::route(['GET', 'PUT'], '/route', function () {
 - **second param:** route pattern
 - **third param:** function to run
 
-## Any
+### Any
 
 Handles if there is any type of request to the `/route` route and runs the given function
 

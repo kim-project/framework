@@ -1,5 +1,12 @@
 # Controller Files
 
+- [Introduction](#introduction)
+- [Creating Controller](#creating-controller)
+  - [Creating subdirectories](#creating-subdirectories)
+- [Structure](#structure)
+
+## Introduction
+
 Controllers are classes located in the `app/Controllers/` directory which extend the `\app\Controllers\Controller` class in the `Controller.php` File  
   
 These files should have defined methods which will be called by `Router`s if the route matches the right pattern

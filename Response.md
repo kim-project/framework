@@ -1,12 +1,28 @@
 # Response
 
-To send response we can use the global function `response()` which returns a `Respone` object
+- [Introduction](#introduction)
+- [using response function](#using-response-function)
+  - [Response types](#response-types)
+    - [String output](#string-output)
+    - [Json output](#json-output)
+    - [View output](#view-output)
+  - [Setting status code](#setting-status-code)
+  - [Sending errors](#sending-errors)
+    - [Showing error for api routes](#showing-error-for-api-routes)
+
+## Introduction
+
+There are multiple ways to send a response to the request
 
 -----
 
-## using response()
+## using response function
 
-### String output
+To send response we can use the global function `response()` which returns a `Respone` object
+
+### Response Types
+
+#### String output
 
 To output basic `string` (can contain html) you can use this function
 
@@ -18,7 +34,7 @@ this will print the `$data` variable
 
 - **first param:** the `string` that you want to print
 
-### Json output
+#### Json output
 
 To output `array` and `Arrayable`s for api usage you can use this function
 
@@ -30,7 +46,7 @@ this will print the json encoded `$data` variable
 
 - **first param:** the `array` or `Arrayable` variable that you want to print
 
-### View output
+#### View output
 
 To output `View` files you can use this function and send required data to the view
 
@@ -45,7 +61,7 @@ this will render the `app/Views/home.php` View with the data sent with the `$dat
 
 -----
 
-## Setting status code
+### Setting status code
 
 You can specify the status code of the response
 
@@ -61,7 +77,7 @@ This will respond to the request with the `200` status code
 
 -----
 
-## Sending errors
+### Sending errors
 
 You can use the status codes bigger than `400` to show errors
 

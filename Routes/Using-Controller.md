@@ -1,10 +1,23 @@
 # Using Controller
 
+- [Introduction](#introduction)
+- [Methods](#methods)
+  - [GET](#get)
+  - [POST](#post)
+  - [PUT](#put)
+  - [DELETE](#delete)
+  - [Multiple](#multiple)
+  - [Any](#any)
+
+## Introduction
+
 You can pass the data to a controller's method
 
 -----
 
-## GET
+## Methods
+
+### GET
 
 Handles if there is `GET` request to the `/route` route and run the `login()` method of the `UserController::class`
 
@@ -17,7 +30,7 @@ Router::get('/route', [UserController::class, 'login']);
   - Controller class
   - Controller's method name
 
-## POST
+### POST
 
 Handles if there is `POST` request to the `/route` route and run the `login()` method of the `UserController::class`
 
@@ -30,7 +43,7 @@ Router::post('/route', [UserController::class, 'login']);
   - Controller class
   - Controller's method name
 
-## PUT
+### PUT
 
 Handles if there is `PUT` request to the `/route` route and run the `login()` method of the `UserController::class`
 
@@ -43,7 +56,7 @@ Router::put('/route', [UserController::class, 'login']);
   - Controller class
   - Controller's method name
 
-## DELETE
+### DELETE
 
 Handles if there is `DELETE` request to the `/route` route and run the `login()` method of the `UserController::class`
 
@@ -56,7 +69,7 @@ Router::delete('/route', [UserController::class, 'login']);
   - Controller class
   - Controller's method name
 
-## Multiple
+### Multiple
 
 Handles if there is `GET` or `PUT` request to the `/route` route and run the `login()` method of the `UserController::class`
 
@@ -70,7 +83,7 @@ Router::route(['GET', 'PUT'], '/route', [UserController::class, 'login']);
   - Controller class
   - Controller's method name
 
-## Any
+### Any
 
 Handles if there is any type of request to the `/route` route and run the `login()` method of the `UserController::class`
 

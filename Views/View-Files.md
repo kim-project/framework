@@ -1,5 +1,13 @@
 # View Files
 
+- [Introduction](#introduction)
+- [Creating View](#creating-view)
+  - [Creating subdirectories](#creating-subdirectories)
+  - [Creating Manually](#creating-manually)
+- [Structure](#structure)
+
+## Introduction
+
 Views are files located in the `app/Views/` directory which has our `HTML` code and the front-end of our site
   
 They can have any extention eg. `.php`, `.html`, etc  

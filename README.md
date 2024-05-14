@@ -10,7 +10,7 @@
 - Apache Compatibility
 - Request Handler and Validator
 - No `composer` required
-- Self-update without `composer` or `git`
+- Self-update (without `composer` or `git`)
 - File Handler
 - Response Handler
 - Database helper (Supports both `mysqli` and `PDO`)

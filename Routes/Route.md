@@ -1,11 +1,23 @@
-
 # Route
+
+- [Introduction](#introduction)
+- [Methods](#methods)
+  - [GET](#get)
+  - [POST](#post)
+  - [PUT](#put)
+  - [DELETE](#delete)
+  - [Multiple](#multiple)
+  - [Any](#any)
+
+## Introduction
 
 These methods are for the `Router`'s Controller group
 
 -----
 
-## GET
+## Methods
+
+### GET
 
 Handles if there is `GET` request to the `/suffix/route` route and run the `getLogin()` method of the controller class
 
@@ -16,7 +28,7 @@ Route::get('/route', 'getLogin');
 - **first param:** route pattern
 - **second param:** name of the controller method to call
 
-## POST
+### POST
 
 Handles if there is `POST` request to the `/suffix/route` route and run the `getLogin()` method of the controller class
 
@@ -27,7 +39,7 @@ Route::post('/route', 'getLogin');
 - **first param:** route pattern
 - **second param:** name of the controller method to call
 
-## PUT
+### PUT
 
 Handles if there is `PUT` request to the `/suffix/route` route and run the `getLogin()` method of the controller class
 
@@ -38,7 +50,7 @@ Route::put('/route', 'getLogin');
 - **first param:** route pattern
 - **second param:** name of the controller method to call
 
-## DELETE
+### DELETE
 
 Handles if there is `DELETE` request to the `/suffix/route` route and run the `getLogin()` method of the controller class
 
@@ -49,7 +61,7 @@ Route::delete('/route', 'getLogin');
 - **first param:** route pattern
 - **second param:** name of the controller method to call
 
-## Multiple
+### Multiple
 
 Handles if there is `GET` or `PUT` request to the `/suffix/route` route and run the `getLogin()` method of the controller class
 
@@ -61,7 +73,7 @@ Route::route(['GET', 'PUT'], '/route', 'getLogin');
 - **second param:** route pattern
 - **third param:** name of the controller method to call
 
-## Any
+### Any
 
 Handles if there is any type of request to the `/suffix/route` route and run the `getLogin()` method of the controller class
 
