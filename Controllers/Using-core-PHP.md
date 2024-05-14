@@ -8,12 +8,15 @@ So we added our own globals (they aren't superglobals you have to use the `globa
   
 **Attention:** These two methods only support `application/json` and `application/x-www-form-urlencoded` input types
 
+-----
+
 ## PUT
 
 You make the global variable accessible by using `global $_PUT;` to make the variable available in the method
 
 ```php
 ...
+
 public function demo () {
     global $_PUT;
 
@@ -21,8 +24,11 @@ public function demo () {
 
     return $_PUT['name']; //print the 'name' field of the input 
 }
+
 ...
 ```
+
+-----
 
 ## DELETE
 
@@ -30,6 +36,7 @@ You make the global variable accessible by using `global $_DELETE;` to make the 
 
 ```php
 ...
+
 public function demo () {
     global $_DELETE;
 
@@ -37,5 +44,6 @@ public function demo () {
 
     return $_DELETE['name']; //print the 'name' field of the input 
 }
+
 ...
 ```

@@ -32,6 +32,7 @@ Also we have to define patterns for the router to get the parameters
 
 ```php
 ...
+
 use app\Controllers\PostController;
 
 Router::controller('/post/:postid', PostController::class, [
