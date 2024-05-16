@@ -121,7 +121,6 @@ class File
         header('Pragma: public');
         header('Content-Length: '.$this->size());
         readfile($this->path);
-        exit;
     }
 
     /**
@@ -134,7 +133,6 @@ class File
         header("Content-Type: ".$this->mimeType());
         header("Content-Length:".$this->size());
         readfile($this->path);
-        exit;
     }
 
     /**
@@ -155,5 +153,14 @@ class File
             $subPath .= $path[$i].'/';
             mkdir($subPath);
         }
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'name' => $this->name(),
+            'type' => $this->mimeType(),
+            'size' => $this->size()
+        ];
     }
 }

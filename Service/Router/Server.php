@@ -164,7 +164,7 @@ class Server
      * @param  string  $route  Route pattern to match
      * @param  bool  $exact  Check for full match or suffix match
      *
-     * @return false|string[] returns array of route params
+     * @return false|array returns array of route params
      */
     public static function checkRoute(string $route, bool $exact = true): bool|array
     {

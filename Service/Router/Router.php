@@ -2,9 +2,7 @@
 
 namespace Kim\Service\Router;
 
-use Kim\Support\Database\DB;
-use Kim\Support\Helpers\Arrayable;
-use Kim\Support\Helpers\File;
+use Kim\Support\Helpers\Response;
 use Kim\Support\Provider\Controller;
 
 class Router
@@ -25,20 +23,15 @@ class Router
      *
      * @return void
      */
-    private static function response(mixed $response): void
+    private static function response(mixed $response): Response
     {
-        if ($response instanceof Arrayable) {
-            $response = $response->toArray();
-        }
-        if($response instanceof File) {
-            $response->response();
+        if ($response instanceof Response) {
+            return $response;
         } elseif (is_array($response) || is_object($response)) {
-            echo json_encode($response);
+            return new Response(200, $response);
         } else {
-            echo $response;
+            return response()->string($response);
         }
-        DB::close();
-        exit;
     }
 
     /**
@@ -84,7 +77,7 @@ class Router
             $function = $value['function'];
             $obj = self::getController($class);
             $res = $obj->$function(...self::parseParam(new \ReflectionMethod($obj, $function), $route));
-            Router::response($res);
+            Router::response($res)();
         }
     }
 
@@ -114,7 +107,7 @@ class Router
         } else {
             $res = $fun(...self::parseParam(new \ReflectionFunction($fun), $route));
         }
-        Router::response($res);
+        Router::response($res)();
     }
 
     /**

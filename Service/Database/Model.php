@@ -4,7 +4,7 @@ namespace Kim\Support\Database;
 
 use Kim\Support\Helpers\Arrayable;
 
-abstract class Model extends Arrayable
+abstract class M extends Arrayable
 {
     /**
      * The table associated with the model.

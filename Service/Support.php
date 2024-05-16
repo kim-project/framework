@@ -50,12 +50,12 @@ function response(int $status = 200, string $message = '', bool $api = false): R
             (new Response($status))->Json([
                 'status' => $status,
                 'message' => $message,
-            ]);
+            ])();
         }
         (new Response($status))->View('errors.php', [
             'message' => $message,
             'status' => $status,
-        ]);
+        ])();
     }
 
     return new Response($status);
@@ -71,7 +71,7 @@ function response(int $status = 200, string $message = '', bool $api = false): R
 function redirect(string $url): void
 {
     header("Location: $url");
-    exit();
+    die;
 }
 
 /**

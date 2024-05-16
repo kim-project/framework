@@ -46,4 +46,14 @@ abstract class Arrayable
     {
         return self::getOnly($only, $this->toArray());
     }
+
+    public function __serialize(): array
+    {
+        return $this->toArray();
+    }
+
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

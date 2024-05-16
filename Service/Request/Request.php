@@ -13,7 +13,7 @@ class Request extends Arrayable
 
     private array $query = [];
 
-    private array $request = [];
+    public array $request = [];
 
     private array $headers = [];
 
