@@ -3,9 +3,8 @@
 namespace app\Models;
 
 use Kim\Support\Database\DB;
-use Kim\Support\Provider\Model;
 
-class User extends Model
+class User
 {
     public static function select(string $where): array
     {

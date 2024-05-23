@@ -130,7 +130,7 @@ class DB
             }
         } else {
             $result = DB::$connection->query($sql);
-            $response = $result->fetch_all();
+            $response = $result->fetch_all(MYSQLI_ASSOC);
             $result->free_result();
         }
 

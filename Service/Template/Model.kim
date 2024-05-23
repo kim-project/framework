@@ -19,7 +19,7 @@ class name: extends Model {
 
     public static function first(string $where): array
     {
-        return DB::first("SELECT * FROM user $where");
+        return DB::first("SELECT * FROM table: $where");
     }
 
     public static function delete(string|int $id) : bool

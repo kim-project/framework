@@ -1,5 +1,5 @@
 {
-    "version": "0.5.7",
+    "version": "0.5.8",
     "files": [
         "/.env.example",
         "/.htaccess",
@@ -19,7 +19,6 @@
         "/Service/Provider/Controller.php",
         "/Service/Provider/View.php",
         "/Service/Provider/Middleware.php",
-        "/Service/Provider/Model.php",
         "/Service/Request/UploadedFile.php",
         "/Service/Request/Request.php",
         "/Service/Request/Validator.php",
