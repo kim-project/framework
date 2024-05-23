@@ -10,6 +10,7 @@ Router::get('/', function () {
 Router::controller('/', UserController::class, [
     Route::get('/login', 'getLogin'),
     Route::post('/login', 'login'),
+    Route::get('/logout', 'logout'),
     Route::get('/signup', 'getSignup'),
     Route::post('/signup', 'signup'),
 ]);

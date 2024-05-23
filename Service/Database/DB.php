@@ -144,7 +144,7 @@ class DB
      *
      * @return array
      */
-    public static function first(string $sql): array
+    public static function first(string $sql): array|null
     {
         $response = [];
         if(DB::$connection instanceof \PDO) {

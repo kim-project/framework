@@ -11,12 +11,12 @@ class User
         return DB::fetch("SELECT * FROM user $where");
     }
 
-    public static function find(string|int $id): array
+    public static function find(string|int $id): array|null
     {
         return DB::first("SELECT * FROM user WHERE `id`='$id'");
     }
 
-    public static function first(string $where): array
+    public static function first(string $where): array|null
     {
         return DB::first("SELECT * FROM user $where");
     }

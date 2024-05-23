@@ -101,6 +101,7 @@ class Server
      */
     public static function startServer(): void
     {
+        session_start();
         self::init();
 
         if (isset(self::$route[0]) && self::$route[0] == 'api') {
