@@ -27,7 +27,7 @@ To send response we can use the global function `response()` which returns a `Re
 To output basic `string` (can contain html) you can use this function
 
 ```php
-response()->String($data);
+return response()->String($data);
 ```
 
 this will print the `$data` variable
@@ -39,7 +39,7 @@ this will print the `$data` variable
 To output `array` and `Arrayable`s for api usage you can use this function
 
 ```php
-response()->Json($data);
+return response()->Json($data);
 ```
 
 this will print the json encoded `$data` variable
@@ -51,7 +51,7 @@ this will print the json encoded `$data` variable
 To output `View` files you can use this function and send required data to the view
 
 ```php
-response()->View('home.php', $data);
+return response()->View('home.php', $data);
 ```
 
 this will render the `app/Views/home.php` View with the data sent with the `$data` variable
@@ -66,7 +66,7 @@ this will render the `app/Views/home.php` View with the data sent with the `$dat
 You can specify the status code of the response
 
 ```php
-response(200)->String($data);
+return response(200)->String($data);
 ```
 
 This will respond to the request with the `200` status code  
@@ -82,7 +82,7 @@ This will respond to the request with the `200` status code
 You can use the status codes bigger than `400` to show errors
 
 ```php
-response(404, 'Page not found');
+return response(404, 'Page not found');
 ```
 
 - **response first param:** the status code of the error
@@ -93,7 +93,7 @@ response(404, 'Page not found');
 If you want to show the error in json format you can use
 
 ```php
-response(404, 'Page not found', true);
+return response(404, 'Page not found', true);
 ```
 
 - **response third param:** if the response should be json
