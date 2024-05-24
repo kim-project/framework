@@ -52,7 +52,7 @@ class Commands
             ],
             [
                 $parse['namespace'],
-                $parse['namespace'] == 'app\Controllers' ? '' : "\n\nuse app\Controllers\Controller;",
+                $parse['namespace'] === 'app\Controllers' ? '' : "\n\nuse app\Controllers\Controller;",
                 $parse['name'],
             ],
             'Controller.kim'
@@ -102,14 +102,14 @@ class Commands
 
     public static function Start(): void
     {
-        echo "\n\nStarting Server...\n\n";
+        echo "\n    __ __  ____ __  ___\n   / //_/ /  _//  |/  /\n  / ,<    / / / /|_/ / \n / /| | _/ / / /  / /  \n/_/ |_|/___//_/  /_/   \n\n\nServer Running at [http://localhost:8000]\n\n";
         shell_exec('php -S localhost:8000 app.php');
     }
 
     public static function Update(): void
     {
         $raw = 'https://raw.githubusercontent.com/kim-project/framework/master';
-        ini_set("allow_url_fopen", 1);
+        ini_set('allow_url_fopen', 1);
         $rKim = file_get_contents($raw.'/Service/Kim.json');
         $Kim = json_decode($rKim, true);
         $curr = new File('/Service/Kim.json');
@@ -122,7 +122,7 @@ class Commands
                 $cont = file_get_contents($raw.$file);
                 if (file_exists(__ROOT__.$file)) {
                     $f = new File($file);
-                    if ($f->read() != $cont) {
+                    if ($f->read() !== $cont) {
                         echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[36mUpdating file '\x1b[33m$file\x1b[36m'...";
                         $f->write($cont);
                         echo " done\n";

@@ -1,6 +1,7 @@
 <?php
 
 namespace app\Controllers;
+
 use app\Models\User;
 use Kim\Support\Database\DB;
 

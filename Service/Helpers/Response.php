@@ -73,7 +73,7 @@ class Response
      */
     public function view(string $view, array $data): self
     {
-        if (substr($view, 0, 1) == '/') {
+        if (substr($view, 0, 1) === '/') {
             $view = substr($view, 1);
         }
         $view = "app/Views/$view";

@@ -44,7 +44,7 @@ class Validator extends Arrayable
             }
         }
 
-        if ($val == null) {
+        if ($val === null) {
             if (in_array('required', $rule)) {
                 $this->errors[] = "$field is required!";
 

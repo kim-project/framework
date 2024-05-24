@@ -84,7 +84,7 @@ class Server
 
         } else {
 
-            if (get_error_message($code) != null) {
+            if (get_error_message($code) !== null) {
                 $code = 503;
             }
             Response($code, $th->getMessage(), $isapi);
@@ -104,7 +104,7 @@ class Server
         session_start();
         self::init();
 
-        if (isset(self::$route[0]) && self::$route[0] == 'api') {
+        if (isset(self::$route[0]) && self::$route[0] === 'api') {
 
             try {
 
@@ -148,13 +148,13 @@ class Server
 
             return in_array($_SERVER['REQUEST_METHOD'], $method);
 
-        } elseif ($method == 'any') {
+        } elseif ($method === 'any') {
 
             return true;
 
         } else {
 
-            return $_SERVER['REQUEST_METHOD'] == strtoupper($method);
+            return $_SERVER['REQUEST_METHOD'] === strtoupper($method);
 
         }
     }
@@ -189,17 +189,17 @@ class Server
             return false;
         }
 
-        if ($exact && count($route) != count($request)) {
+        if ($exact && count($route) !== count($request)) {
             return false;
         }
 
         foreach ($route as $key => $value) {
 
-            if (substr($value, 0, 1) == ':') {
+            if (substr($value, 0, 1) === ':') {
 
                 $data[substr($value, 1)] = $request[$key];
 
-            } elseif (strtolower($value) != strtolower($request[$key])) {
+            } elseif (strtolower($value) !== strtolower($request[$key])) {
 
                 return false;
 

@@ -21,10 +21,10 @@ class Autoload
     private static function getClass(string $class): ?string
     {
         $path = self::parseClassName($class);
-        if ($path[0] == 'app') {
+        if ($path[0] === 'app') {
             return implode('/', $path).'.php';
-        } elseif ($path[0] == 'Kim') {
-            if ($path[1] == 'Service' || $path[1] == 'Support') {
+        } elseif ($path[0] === 'Kim') {
+            if ($path[1] === 'Service' || $path[1] === 'Support') {
                 return 'Service/'.implode('/', array_slice($path, 2)).'.php';
             }
 

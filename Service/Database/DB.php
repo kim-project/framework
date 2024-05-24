@@ -11,20 +11,20 @@ class DB
      */
     private static \mysqli|\PDO $connection;
 
+    public static function connect(): void
+    {
+
+    }
+
     /**
      * Create connection to database
      *
-     * @param  string  $host  The path in which the file should be created
-     * @param  string  $username  The content to put in the file
-     * @param  string  $password  The content to put in the file
-     * @param  string  $database  The content to put in the file
-     *
-     * @return void
+     * @return \mysqli|\PDO
      */
-    public static function connect(): void
+    private static function conn(): \mysqli|\PDO
     {
         if (isset(DB::$connection)) {
-            throw new \Exception('Connection Exists.');
+            return DB::$connection;
         }
         $host = config('db_host');
         $username = config('db_username');
@@ -40,7 +40,7 @@ class DB
             try {
                 switch (config('db_type')) {
                     case 'sqlite':
-                        DB::$connection = new \PDO("sqlite:".config('sqlite_path'));
+                        DB::$connection = new \PDO('sqlite:'.config('sqlite_path'));
                         break;
 
                     case 'pgsql':
@@ -51,19 +51,20 @@ class DB
                     case 'mysql':
                         $port = env('DB_PORT', 3306);
                         DB::$connection = new \PDO("mysql:host=$host;port=$port;dbname=$database", $username, $password);
+                        break;
 
-                        // no break
                     case 'sqlsrv':
                         $port = env('DB_PORT', 1433);
                         DB::$connection = new \PDO("sqlsrv:Server=$host,$port;Database=$database", $username, $password);
+                        break;
 
                 }
-                // set the PDO error mode to exception
                 DB::$connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch(\PDOException $e) {
                 exit('Connection failed: '.$e->getMessage());
             }
         }
+        return DB::$connection;
     }
 
     /**
@@ -73,7 +74,7 @@ class DB
      */
     public static function core(): \mysqli|\PDO
     {
-        return DB::$connection;
+        return DB::conn();
     }
 
     /**
@@ -83,7 +84,8 @@ class DB
      */
     public static function close(): bool
     {
-        if (isset(DB::$connection) && DB::$connection instanceof \mysqli) {
+        $conn = DB::conn();
+        if ($conn instanceof \mysqli) {
             return DB::$connection->close();
         } else {
             return false;
@@ -99,15 +101,16 @@ class DB
      */
     public static function sql(string $sql): bool|\mysqli_result|int
     {
-        if(DB::$connection instanceof \PDO) {
+        $conn = DB::conn();
+        if($conn instanceof \PDO) {
             try {
-                return DB::$connection->exec($sql);
+                return $conn->exec($sql);
             } catch (\Throwable $th) {
                 response(503, $th->getMessage());
                 return false;
             }
         } else {
-            return DB::$connection->query($sql);
+            return $conn->query($sql);
         }
     }
 
@@ -120,16 +123,17 @@ class DB
      */
     public static function fetch(string $sql): array
     {
+        $conn = DB::conn();
         $response = [];
-        if(DB::$connection instanceof \PDO) {
+        if($conn instanceof \PDO) {
             try {
-                $stm = DB::$connection->query($sql);
+                $stm = $conn->query($sql);
                 $response = $stm->fetchAll(\PDO::FETCH_ASSOC);
             } catch (\Throwable $th) {
                 response(503, $th->getMessage());
             }
         } else {
-            $result = DB::$connection->query($sql);
+            $result = $conn->query($sql);
             $response = $result->fetch_all(MYSQLI_ASSOC);
             $result->free_result();
         }
@@ -142,20 +146,21 @@ class DB
      *
      * @param  string  $sql  The sql query to run
      *
-     * @return array
+     * @return array|null
      */
     public static function first(string $sql): array|null
     {
+        $conn = DB::conn();
         $response = [];
-        if(DB::$connection instanceof \PDO) {
+        if($conn instanceof \PDO) {
             try {
-                $stm = DB::$connection->query($sql);
+                $stm = $conn->query($sql);
                 $response = $stm->fetch(\PDO::FETCH_ASSOC);
             } catch (\Throwable $th) {
                 response(503, $th->getMessage());
             }
         } else {
-            $result = DB::$connection->query($sql);
+            $result = $conn->query($sql);
             $response = $result->fetch_assoc();
             $result->free_result();
         }

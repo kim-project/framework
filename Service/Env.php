@@ -6,7 +6,7 @@ function loadEnv(): void
 {
     $conf = parse_ini_file(__ROOT__.'/.env');
     foreach ($conf as $key => $val) {
-        if(isset($val) && $val != '') {
+        if(isset($val) && $val !== '') {
             putenv("$key=$val");
             $_ENV[$key] = $val;
             $_SERVER[$key] = $val;

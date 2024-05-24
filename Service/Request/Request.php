@@ -25,14 +25,14 @@ class Request extends Arrayable
     {
         $this->query = $_GET;
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $this->request = $_POST;
             $this->files = array_map(function ($item) {
                 return new UploadedFile(...$item);
             }, $_FILES);
 
-        } elseif ($_SERVER['REQUEST_METHOD'] != 'GET') {
+        } elseif ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 
             $this->request = self::parseInput();
 
@@ -48,7 +48,7 @@ class Request extends Arrayable
 
         foreach ($_SERVER as $key => $value) {
 
-            if (substr($key, 0, 5) != 'HTTP_') {
+            if (substr($key, 0, 5) !== 'HTTP_') {
                 continue;
             }
             $header = ucwords(str_replace('_', '-', strtolower(substr($key, 5))));

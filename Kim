@@ -1,5 +1,12 @@
 <?php
 
+#_________ ______________  ___
+# _____  //_/___  _/__   |/  /
+#  ___  ,<   __  / __  /|_/ /
+#   _  /| | __/ /  _  /  / /
+#   /_/ |_| /___/  /_/  /_/
+
+
 define('__ROOT__', __DIR__);
 
 require 'Service/Autoload.php';
@@ -30,8 +37,8 @@ switch (strtolower($argv[1])) {
         break;
 
     case 'update':
-        case 'upgrade':
-        case 'u':
-            \Kim\Support\Provider\Commands::Update();
-            break;
+    case 'upgrade':
+    case 'u':
+        \Kim\Support\Provider\Commands::Update();
+        break;
 }

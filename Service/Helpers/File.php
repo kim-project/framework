@@ -130,8 +130,8 @@ class File
      */
     public function response(): void
     {
-        header("Content-Type: ".$this->mimeType());
-        header("Content-Length:".$this->size());
+        header('Content-Type: '.$this->mimeType());
+        header('Content-Length:'.$this->size());
         readfile($this->path);
     }
 

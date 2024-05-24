@@ -3,6 +3,7 @@
     "files": [
         "/.env.example",
         "/.htaccess",
+        "/app.php",
         "/config.php",
         "/Kim",
         "/.gitignore",
