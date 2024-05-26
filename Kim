@@ -1,15 +1,22 @@
 <?php
 
-#_________ ______________  ___
-# _____  //_/___  _/__   |/  /
-#  ___  ,<   __  / __  /|_/ /
-#   _  /| | __/ /  _  /  / /
-#   /_/ |_| /___/  /_/  /_/
+/*
+ _________ ______________  ___
+  _____  //_/___  _/__   |/  /
+   ___  ,<   __  / __  /|_/ /
+    _  /| | __/ /  _  /  / /
+    /_/ |_| /___/  /_/  /_/
+*/
 
 
 define('__ROOT__', __DIR__);
 
-require 'Service/Autoload.php';
+require_once 'Service/Autoload.php';
+
+if (!isset($argv[1])) {
+    \Kim\Support\Provider\Commands::Kim();
+    exit;
+}
 
 switch (strtolower($argv[1])) {
     case 'start':
@@ -40,5 +47,9 @@ switch (strtolower($argv[1])) {
     case 'upgrade':
     case 'u':
         \Kim\Support\Provider\Commands::Update();
+        break;
+
+    default:
+        \Kim\Support\Provider\Commands::Kim();
         break;
 }

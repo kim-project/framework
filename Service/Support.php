@@ -1,5 +1,6 @@
 <?php
 
+use Kim\Service\Auth\JWT;
 use Kim\Support\Helpers\File;
 use Kim\Support\Helpers\Response;
 
@@ -8,9 +9,9 @@ use Kim\Support\Helpers\Response;
  *
  * @param  int  $error_code  http error code
  *
- * @return string|null
+ * @return string
  */
-function get_error_message(int $error_code): string|null
+function get_error_message(int $error_code): string
 {
     $codes = [
         400 => 'Bad Request',
@@ -29,7 +30,7 @@ function get_error_message(int $error_code): string|null
         504 => 'Gateway Timeout',
     ];
 
-    return $codes[$error_code];
+    return array_key_exists($error_code, $codes) ? $codes[$error_code] : $codes[500];
 }
 
 /**
@@ -41,8 +42,9 @@ function get_error_message(int $error_code): string|null
  *
  * @return Response
  */
-function response(int $status = 200, string $message = '', bool $api = false): Response
+function response(int $status = 200, string $message = '', ?bool $api = null): Response
 {
+    $api = $api !== null ? $api : IS_API;
     if ($status < 100) {
         throw new Exception($message, $status);
     } elseif ($status >= 400) {
@@ -123,4 +125,9 @@ function csrf(): bool
     }
 
     return true;
+}
+
+function JWT(): JWT
+{
+    return JWT::core();
 }

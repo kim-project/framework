@@ -14,20 +14,6 @@ class Server
     private static array $route;
 
     /**
-     * The set prefix
-     *
-     * @var array|false
-     */
-    private static array|bool $prefix = [];
-
-    /**
-     * The request
-     *
-     * @var Request
-     */
-    private static Request $request;
-
-    /**
      * initialize the server
      *
      * @return void
@@ -48,15 +34,13 @@ class Server
 
         if (! isset($_SESSION['csrf'])) {
 
-            $_SESSION['csrf'] = md5(uniqid(mt_rand(), true));
+            $_SESSION['csrf'] = bin2hex(random_bytes(32));
 
         }
 
         define('CSRF', "<input type=\"hidden\" name=\"token\" value=\"{$_SESSION['csrf']}\">");
 
         //Request Handlers
-        self::$request = new Request();
-
         $GLOBALS['_PUT'] = [];
         $GLOBALS['_DELETE'] = [];
         if(self::checkMethod('put')) {
@@ -64,30 +48,31 @@ class Server
         } elseif (self::checkMethod('delete')) {
             $GLOBALS['_DELETE'] = Request::parseInput();
         }
+
+        define('IS_API', isset(self::$route[0]) && self::$route[0] === 'api');
     }
 
     /**
      * Handle errors
      *
      * @param \Throwable $th Error
-     * @param bool $isapi Show error in json format
      *
      * @return void
      */
-    private static function error(\Throwable $th, bool $isapi = false): void
+    private static function error(\Throwable $th): void
     {
         $code = $th->getCode();
 
         if ($code < 400) {
 
-            Response(503, $th->getMessage(), $isapi);
+            Response(500, $th->getMessage());
 
         } else {
 
-            if (get_error_message($code) !== null) {
-                $code = 503;
+            if (get_error_message($code) === 'Internal Server Error') {
+                $code = 500;
             }
-            Response($code, $th->getMessage(), $isapi);
+            Response($code, $th->getMessage());
 
         }
 
@@ -104,35 +89,20 @@ class Server
         session_start();
         self::init();
 
-        if (isset(self::$route[0]) && self::$route[0] === 'api') {
+        try {
 
-            try {
-
-                self::setPrefix('/api/');
+            if (IS_API) {
                 require 'Routes/api.php';
-
-            } catch (\Throwable $th) {
-
-                self::error($th, true);
-
-            }
-            Response(404, 'route not found', true);
-
-        } else {
-
-            try {
-
-                self::setPrefix('/');
+            } else {
                 require 'Routes/web.php';
-
-            } catch (\Throwable $th) {
-
-                self::error($th);
-
             }
-            Response(404, 'Page not found');
+
+        } catch (\Throwable $th) {
+
+            self::error($th);
 
         }
+        Response(404, 'Page not found');
     }
 
     /**
@@ -169,27 +139,24 @@ class Server
      */
     public static function checkRoute(string $route, bool $exact = true): bool|array
     {
-        if (self::$prefix === false) {
-            return false;
-        }
         $route = array_values(
             array_filter(
                 explode('/', $route)
             )
         );
-        $request = array_values(
-            array_diff_assoc(self::$route, self::$prefix)
-        );
+        if (IS_API) {
+            array_unshift($route, 'api');
+        }
 
         $data = [
-            'request' => self::$request
+            'request' => Request::getRequest()
         ];
 
-        if (count($route) > count($request)) {
+        if (count($route) > count(self::$route)) {
             return false;
         }
 
-        if ($exact && count($route) !== count($request)) {
+        if ($exact && count($route) !== count(self::$route)) {
             return false;
         }
 
@@ -197,9 +164,9 @@ class Server
 
             if (substr($value, 0, 1) === ':') {
 
-                $data[substr($value, 1)] = $request[$key];
+                $data[substr($value, 1)] = self::$route[$key];
 
-            } elseif (strtolower($value) !== strtolower($request[$key])) {
+            } elseif (strtolower($value) !== strtolower(self::$route[$key])) {
 
                 return false;
 
@@ -218,39 +185,5 @@ class Server
     public static function getRoute(): string
     {
         return '/'.implode('/', self::$route);
-    }
-
-    /**
-     * Set Prefix for match
-     *
-     * @param string $prefix
-     *
-     * @return void
-     */
-    public static function setPrefix(string $prefix): void
-    {
-        if (self::checkRoute($prefix, false) !== false) {
-
-            self::$prefix = array_values(
-                array_filter(
-                    explode('/', $prefix)
-                )
-            );
-
-        } else {
-
-            self::$prefix = false;
-
-        }
-    }
-
-    /**
-     * Get Prefix for match
-     *
-     * @return string
-     */
-    public static function getPrefix(): string
-    {
-        return '/'.implode('/', self::$prefix);
     }
 }

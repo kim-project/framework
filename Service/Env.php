@@ -27,3 +27,5 @@ function config(string $key): mixed
 {
     return Config::getConfig($key);
 }
+
+loadEnv();

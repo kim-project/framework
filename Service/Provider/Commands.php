@@ -6,6 +6,8 @@ use Kim\Support\Helpers\File;
 
 class Commands
 {
+    private const Kim = "\x1b[36m\n_________ ______________  ___\n _____  //_/___  _/__   |/  /\n  ___  ,<   __  / __  /|_/ /\n   _  /| | __/ /  _  /  / /\n   /_/ |_| /___/  /_/  /_/\n\n\n\x1b[37m";
+
     private static function parseName(string $name, string $type): array
     {
         $path = array_filter(
@@ -102,7 +104,7 @@ class Commands
 
     public static function Start(): void
     {
-        echo "\n    __ __  ____ __  ___\n   / //_/ /  _//  |/  /\n  / ,<    / / / /|_/ / \n / /| | _/ / / /  / /  \n/_/ |_|/___//_/  /_/   \n\n\nServer Running at [http://localhost:8000]\n\n";
+        echo self::Kim."Server Running at [http://localhost:8000]\n\n";
         shell_exec('php -S localhost:8000 app.php');
     }
 
@@ -140,5 +142,25 @@ class Commands
         } else {
             echo "\n\n\n\x1b[33m[\x1b[36m  Kim is up to date! \x1b[33m]\n\n\n\x1b[0m";
         }
+    }
+
+    public static function KeyGen(): string
+    {
+        $ini = parse_ini_file(__ROOT__.'/.env');
+        $secret = rtrim(base64_encode(random_bytes(64)), '=');
+        unset($ini['APP_SECRET']);
+
+        $ini = array_map(function (string $k, string $v) {
+            return "$k=$v";
+        }, array_keys($ini), array_values($ini));
+
+        file_put_contents(__ROOT__.'/.env', 'APP_SECRET='.$secret.PHP_EOL.implode(PHP_EOL, $ini)).PHP_EOL;
+
+        return $secret;
+    }
+
+    public static function Kim(): void
+    {
+        echo self::Kim;
     }
 }

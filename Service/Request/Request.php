@@ -7,6 +7,8 @@ use Kim\Support\Helpers\Arrayable;
 
 class Request extends Arrayable
 {
+    private static ?self $instance = null;
+
     private static array $php_input;
 
     private array $files = [];
@@ -21,7 +23,7 @@ class Request extends Arrayable
 
     private array $cookie = [];
 
-    public function __construct()
+    private function __construct()
     {
         $this->query = $_GET;
 
@@ -42,7 +44,16 @@ class Request extends Arrayable
         $this->session = $_SESSION;
     }
 
-    private function getRequestHeaders()
+    public static function getRequest(): self
+    {
+        if(!self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    private function getRequestHeaders(): void
     {
         $headers = [];
 

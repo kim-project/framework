@@ -23,8 +23,8 @@ class DB
      */
     private static function conn(): \mysqli|\PDO
     {
-        if (isset(DB::$connection)) {
-            return DB::$connection;
+        if (isset(self::$connection)) {
+            return self::$connection;
         }
         $host = config('db_host');
         $username = config('db_username');
@@ -32,39 +32,39 @@ class DB
         $database = config('db_database');
         if(config('db_mysqli')) {
             $port = env('DB_PORT', 3306);
-            DB::$connection = new \mysqli($host, $username, $password, $database, $port);
-            if (DB::$connection->connect_error) {
-                exit('Connection failed: '.DB::$connection->connect_error);
+            self::$connection = new \mysqli($host, $username, $password, $database, $port);
+            if (self::$connection->connect_error) {
+                exit('Connection failed: '.self::$connection->connect_error);
             }
         } else {
             try {
                 switch (config('db_type')) {
                     case 'sqlite':
-                        DB::$connection = new \PDO('sqlite:'.config('sqlite_path'));
+                        self::$connection = new \PDO('sqlite:'.config('sqlite_path'));
                         break;
 
                     case 'pgsql':
                         $port = env('DB_PORT', 5432);
-                        DB::$connection = new \PDO("pgsql:host=$host;port=$port;dbname=$database;user=$username;password=$password");
+                        self::$connection = new \PDO("pgsql:host=$host;port=$port;dbname=$database;user=$username;password=$password");
                         break;
 
                     case 'mysql':
                         $port = env('DB_PORT', 3306);
-                        DB::$connection = new \PDO("mysql:host=$host;port=$port;dbname=$database", $username, $password);
+                        self::$connection = new \PDO("mysql:host=$host;port=$port;dbname=$database", $username, $password);
                         break;
 
                     case 'sqlsrv':
                         $port = env('DB_PORT', 1433);
-                        DB::$connection = new \PDO("sqlsrv:Server=$host,$port;Database=$database", $username, $password);
+                        self::$connection = new \PDO("sqlsrv:Server=$host,$port;Database=$database", $username, $password);
                         break;
 
                 }
-                DB::$connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+                self::$connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch(\PDOException $e) {
                 exit('Connection failed: '.$e->getMessage());
             }
         }
-        return DB::$connection;
+        return self::$connection;
     }
 
     /**
@@ -74,7 +74,7 @@ class DB
      */
     public static function core(): \mysqli|\PDO
     {
-        return DB::conn();
+        return self::conn();
     }
 
     /**
@@ -84,11 +84,11 @@ class DB
      */
     public static function close(): bool
     {
-        $conn = DB::conn();
+        $conn = isset(self::$connection) ? self::$connection : null;
         if ($conn instanceof \mysqli) {
-            return DB::$connection->close();
+            return $conn->close();
         } else {
-            return false;
+            return true;
         }
     }
 
@@ -101,7 +101,7 @@ class DB
      */
     public static function sql(string $sql): bool|\mysqli_result|int
     {
-        $conn = DB::conn();
+        $conn = self::conn();
         if($conn instanceof \PDO) {
             try {
                 return $conn->exec($sql);
@@ -123,7 +123,7 @@ class DB
      */
     public static function fetch(string $sql): array
     {
-        $conn = DB::conn();
+        $conn = self::conn();
         $response = [];
         if($conn instanceof \PDO) {
             try {
@@ -150,7 +150,7 @@ class DB
      */
     public static function first(string $sql): array|null
     {
-        $conn = DB::conn();
+        $conn = self::conn();
         $response = [];
         if($conn instanceof \PDO) {
             try {

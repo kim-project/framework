@@ -1,15 +1,16 @@
 <?php
 
-#_________ ______________  ___
-# _____  //_/___  _/__   |/  /
-#  ___  ,<   __  / __  /|_/ /
-#   _  /| | __/ /  _  /  / /
-#   /_/ |_| /___/  /_/  /_/
-
+/*
+ _________ ______________  ___
+  _____  //_/___  _/__   |/  /
+   ___  ,<   __  / __  /|_/ /
+    _  /| | __/ /  _  /  / /
+    /_/ |_| /___/  /_/  /_/
+*/
 
 define('__ROOT__', __DIR__);
 
-require 'Service/Autoload.php';
+require_once 'Service/Autoload.php';
 
 if (php_sapi_name() === 'cli-server') {
     if (preg_match('/^\/public\//i', $_SERVER['REQUEST_URI'])) {
@@ -20,7 +21,5 @@ if (php_sapi_name() === 'cli-server') {
         }
     }
 }
-
-loadEnv();
 
 \Kim\Service\Router\Server::startServer();

@@ -77,7 +77,7 @@ class Router
             $function = $value['function'];
             $obj = self::getController($class);
             $res = $obj->$function(...self::parseParam(new \ReflectionMethod($obj, $function), $route));
-            Router::response($res)();
+            self::response($res)();
         }
     }
 
@@ -107,7 +107,7 @@ class Router
         } else {
             $res = $fun(...self::parseParam(new \ReflectionFunction($fun), $route));
         }
-        Router::response($res)();
+        self::response($res)();
     }
 
     /**
@@ -120,7 +120,7 @@ class Router
      */
     public static function get(string $route, array|callable $fun): void
     {
-        Router::route('GET', $route, $fun);
+        self::route('GET', $route, $fun);
     }
 
     /**
@@ -133,7 +133,7 @@ class Router
      */
     public static function post(string $route, array|callable $fun): void
     {
-        Router::route('POST', $route, $fun);
+        self::route('POST', $route, $fun);
     }
 
     /**
@@ -146,7 +146,7 @@ class Router
      */
     public static function put(string $route, array|callable $fun): void
     {
-        Router::route('PUT', $route, $fun);
+        self::route('PUT', $route, $fun);
     }
 
     /**
@@ -159,7 +159,7 @@ class Router
      */
     public static function delete(string $route, array|callable $fun): void
     {
-        Router::route('DELETE', $route, $fun);
+        self::route('DELETE', $route, $fun);
     }
 
     /**
@@ -172,6 +172,6 @@ class Router
      */
     public static function any(string $route, array|callable $fun): void
     {
-        Router::route('any', $route, $fun);
+        self::route('any', $route, $fun);
     }
 }
