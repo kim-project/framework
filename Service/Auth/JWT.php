@@ -2,11 +2,12 @@
 
 namespace Kim\Service\Auth;
 
+use Kim\Support\Helpers\Singleton;
 use Kim\Support\Provider\Commands;
 
 class JWT
 {
-    private static ?self $instance = null;
+    use Singleton {getInstance as core;}
     private string $secret;
 
     private function __construct()
@@ -17,15 +18,6 @@ class JWT
         } else {
             $this->secret = Commands::KeyGen();
         }
-    }
-
-    public static function core(): self
-    {
-        if(!self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
     }
 
     public function generate(array $payload): string

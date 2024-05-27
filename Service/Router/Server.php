@@ -3,28 +3,29 @@
 namespace Kim\Service\Router;
 
 use Kim\Service\Request\Request;
+use Kim\Support\Helpers\Singleton;
 
 class Server
 {
+    use Singleton {getInstance as getServer;}
+
     /**
      * The request route
      *
      * @var string[]
      */
-    private static array $route;
+    private array $route;
 
     /**
      * initialize the server
-     *
-     * @return void
      */
-    private static function init(): void
+    protected function __construct()
     {
         //Parse Route
 
         $route = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        self::$route = array_values(
+        $this->route = array_values(
             array_filter(
                 explode('/', $route)
             )
@@ -49,34 +50,7 @@ class Server
             $GLOBALS['_DELETE'] = Request::parseInput();
         }
 
-        define('IS_API', isset(self::$route[0]) && self::$route[0] === 'api');
-    }
-
-    /**
-     * Handle errors
-     *
-     * @param \Throwable $th Error
-     *
-     * @return void
-     */
-    private static function error(\Throwable $th): void
-    {
-        $code = $th->getCode();
-
-        if ($code < 400) {
-
-            Response(500, $th->getMessage());
-
-        } else {
-
-            if (get_error_message($code) === 'Internal Server Error') {
-                $code = 500;
-            }
-            Response($code, $th->getMessage());
-
-        }
-
-        exit();
+        define('IS_API', isset($this->route[0]) && $this->route[0] === 'api');
     }
 
     /**
@@ -84,10 +58,9 @@ class Server
      *
      * @return void
      */
-    public static function startServer(): void
+    public function start(): void
     {
         session_start();
-        self::init();
 
         try {
 
@@ -99,10 +72,11 @@ class Server
 
         } catch (\Throwable $th) {
 
-            self::error($th);
+            response(500, $th->getMessage());
+            exit;
 
         }
-        Response(404, 'Page not found');
+        response(404, 'Page not found');
     }
 
     /**
@@ -137,7 +111,7 @@ class Server
      *
      * @return false|array returns array of route params
      */
-    public static function checkRoute(string $route, bool $exact = true): bool|array
+    public function checkRoute(string $route, bool $exact = true): bool|array
     {
         $route = array_values(
             array_filter(
@@ -152,11 +126,11 @@ class Server
             'request' => Request::getRequest()
         ];
 
-        if (count($route) > count(self::$route)) {
+        if (count($route) > count($this->route)) {
             return false;
         }
 
-        if ($exact && count($route) !== count(self::$route)) {
+        if ($exact && count($route) !== count($this->route)) {
             return false;
         }
 
@@ -164,9 +138,9 @@ class Server
 
             if (substr($value, 0, 1) === ':') {
 
-                $data[substr($value, 1)] = self::$route[$key];
+                $data[substr($value, 1)] = $this->route[$key];
 
-            } elseif (strtolower($value) !== strtolower(self::$route[$key])) {
+            } elseif (strtolower($value) !== strtolower($this->route[$key])) {
 
                 return false;
 
@@ -182,8 +156,8 @@ class Server
      *
      * @return string
      */
-    public static function getRoute(): string
+    public function getRoute(): string
     {
-        return '/'.implode('/', self::$route);
+        return '/'.implode('/', $this->route);
     }
 }

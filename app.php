@@ -17,9 +17,9 @@ if (php_sapi_name() === 'cli-server') {
         if (file_exists('.'.$_SERVER['REQUEST_URI'])) {
             return false;
         } else {
-            Response(404, 'Page not found');
+            response(404, 'Page not found');
         }
     }
 }
 
-\Kim\Service\Router\Server::startServer();
+\Kim\Service\Router\Server::getServer()->start();

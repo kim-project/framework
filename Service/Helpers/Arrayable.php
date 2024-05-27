@@ -2,7 +2,7 @@
 
 namespace Kim\Support\Helpers;
 
-abstract class Arrayable
+trait Arrayable
 {
     /**
      * convert object to array

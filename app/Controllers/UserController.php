@@ -60,7 +60,7 @@ class UserController extends Controller
         if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])) {
             if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                 return response()->view('Signup.php', [
-                    'error' => 'Invalid Email'
+                    'error' => 'Invalid Email',
                 ]);
             }
 
@@ -68,7 +68,7 @@ class UserController extends Controller
             $user = User::first("WHERE email='$email'");
             if ($user) {
                 return response()->view('Signup.php', [
-                    'error' => 'Email already used'
+                    'error' => 'Email already used',
                 ]);
             }
 
@@ -78,7 +78,7 @@ class UserController extends Controller
             return response()->redirect('/login');
         } else {
             return response()->view('Signup.php', [
-                'error' => 'All fields required'
+                'error' => 'All fields required',
             ]);
         }
     }

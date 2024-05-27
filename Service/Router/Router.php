@@ -3,11 +3,21 @@
 namespace Kim\Service\Router;
 
 use Kim\Support\Helpers\Response;
+use Kim\Support\Helpers\Singleton;
 use Kim\Support\Provider\Controller;
 
 class Router
 {
-    private static function parseParam(\ReflectionMethod|\ReflectionFunction $f, array $data): array
+    use Singleton {getInstance as protected;}
+
+    private Server $server;
+
+    protected function __construct()
+    {
+        $this->server = Server::getServer();
+    }
+
+    private function parseParam(\ReflectionMethod|\ReflectionFunction $f, array $data): array
     {
         $result = array();
         foreach ($f->getParameters() as $param) {
@@ -23,7 +33,7 @@ class Router
      *
      * @return void
      */
-    private static function response(mixed $response): Response
+    private function response(mixed $response): Response
     {
         if ($response instanceof Response) {
             return $response;
@@ -41,11 +51,11 @@ class Router
      *
      * @return Controller
      */
-    private static function getController(string $class): Controller
+    private function getController(string $class): Controller
     {
-        $obj = (new $class());
+        $obj = new $class();
         if (! $obj instanceof Controller) {
-            throw new \Exception("$class is not a \app\Controllers\Controller", 503);
+            throw new \Exception("$class is not a \app\Controllers\Controller");
         }
 
         return $obj;
@@ -62,7 +72,8 @@ class Router
      */
     public static function controller(string $prefix, string $class, array $routes): void
     {
-        if (Server::checkRoute($prefix, false) === false) {
+        $router = self::getInstance();
+        if ($router->server->checkRoute($prefix, false) === false) {
             return;
         }
 
@@ -70,14 +81,14 @@ class Router
             if (! Server::checkMethod($value['method'])) {
                 continue;
             }
-            $route = Server::checkRoute($prefix.'/'.$value['route']);
+            $route = $router->server->checkRoute($prefix.'/'.$value['route']);
             if ($route === false) {
                 continue;
             }
             $function = $value['function'];
-            $obj = self::getController($class);
-            $res = $obj->$function(...self::parseParam(new \ReflectionMethod($obj, $function), $route));
-            self::response($res)();
+            $obj = $router->getController($class);
+            $res = $obj->$function(...$router->parseParam(new \ReflectionMethod($obj, $function), $route));
+            $router->response($res)();
         }
     }
 
@@ -92,22 +103,23 @@ class Router
      */
     public static function route(array|string $method, string $route, array|callable $fun): void
     {
+        $router = self::getInstance();
         if (! Server::checkMethod($method)) {
             return;
         }
-        $route = Server::checkRoute($route);
+        $route = $router->server->checkRoute($route);
         if ($route === false) {
             return;
         }
         $res = [];
         if (is_array($fun)) {
-            $obj = self::getController($fun[0]);
+            $obj = $router->getController($fun[0]);
             $function = $fun[1];
-            $res = $obj->$function(...self::parseParam(new \ReflectionMethod($obj, $function), $route));
+            $res = $obj->$function(...$router->parseParam(new \ReflectionMethod($obj, $function), $route));
         } else {
-            $res = $fun(...self::parseParam(new \ReflectionFunction($fun), $route));
+            $res = $fun(...$router->parseParam(new \ReflectionFunction($fun), $route));
         }
-        self::response($res)();
+        $router->response($res)();
     }
 
     /**

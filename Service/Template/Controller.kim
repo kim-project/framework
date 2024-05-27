@@ -5,7 +5,7 @@ namespace namespace:;use:
 class name: extends Controller {
 
     public function demo () {
-        Response()->String('Hello World');
+        response()->string('Hello World');
     }
 
 }

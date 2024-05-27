@@ -4,10 +4,11 @@ namespace Kim\Service\Request;
 
 use Kim\Service\Router\Server;
 use Kim\Support\Helpers\Arrayable;
+use Kim\Support\Helpers\Singleton;
 
-class Request extends Arrayable
+class Request
 {
-    private static ?self $instance = null;
+    use Arrayable, Singleton {Singleton::getInstance as getRequest;}
 
     private static array $php_input;
 
@@ -42,15 +43,6 @@ class Request extends Arrayable
 
         $this->cookie = $_COOKIE;
         $this->session = $_SESSION;
-    }
-
-    public static function getRequest(): self
-    {
-        if(!self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
     }
 
     private function getRequestHeaders(): void
@@ -143,7 +135,7 @@ class Request extends Arrayable
 
     public function path(): string
     {
-        return Server::getRoute();
+        return Server::getServer()->getRoute();
     }
 
     public function method(): string

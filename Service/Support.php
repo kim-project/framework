@@ -120,7 +120,7 @@ function csrf(): bool
     $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 
     if (! $token || $token !== $_SESSION['token']) {
-        Response(405, 'Method Not Allowed');
+        response(405, 'Method Not Allowed');
         exit;
     }
 

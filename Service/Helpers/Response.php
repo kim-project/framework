@@ -78,7 +78,7 @@ class Response
         }
         $view = "app/Views/$view";
         if (!file_exists($view)) {
-            throw new \Exception("View $view not found", 503);
+            throw new \Exception("View $view not found");
         }
         $this->res = new View($view, $data);
         return $this;

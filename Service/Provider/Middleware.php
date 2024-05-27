@@ -5,7 +5,7 @@ namespace Kim\Support\Provider;
 use Kim\Service\Request\Request;
 use Kim\Support\Helpers\Response;
 
-abstract class Middleware
+interface Middleware
 {
-    abstract public function handle(Request $request, callable $next): Response;
+    public function handle(Request $request, callable $next): Response;
 }
