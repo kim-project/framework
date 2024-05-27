@@ -4,6 +4,9 @@ use Kim\Support\Helpers\Config;
 
 function loadEnv(): void
 {
+    if (!file_exists(__ROOT__.'/.env')) {
+        return;
+    }
     $conf = parse_ini_file(__ROOT__.'/.env');
     foreach ($conf as $key => $val) {
         if(isset($val) && $val !== '') {
