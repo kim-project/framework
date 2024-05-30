@@ -1,6 +1,8 @@
 <?php
 
 use Kim\Service\Auth\JWT;
+use Kim\Support\Helpers\Arrayable;
+use Kim\Support\Helpers\Collection;
 use Kim\Support\Helpers\File;
 use Kim\Support\Helpers\Response;
 
@@ -49,12 +51,12 @@ function response(int $status = 200, string $message = '', ?bool $api = null): R
         throw new Exception($message, $status);
     } elseif ($status >= 400) {
         if ($api) {
-            (new Response($status))->Json([
+            (new Response($status))->json([
                 'status' => $status,
                 'message' => $message,
             ])();
         }
-        (new Response($status))->View('errors.php', [
+        (new Response($status))->view('errors.php', [
             'message' => $message,
             'status' => $status,
         ])();
@@ -108,6 +110,11 @@ function getFile(string $path): ?File
     } else {
         return null;
     }
+}
+
+function collect(array $array): Collection
+{
+    return new Collection($array);
 }
 
 /**

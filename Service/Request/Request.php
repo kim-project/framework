@@ -12,11 +12,15 @@ class Request
 
     private static array $php_input;
 
+    public string $method;
+
+    public string $route;
+
     private array $files = [];
 
     private array $query = [];
 
-    public array $request = [];
+    private array $request = [];
 
     private array $headers = [];
 
@@ -26,18 +30,22 @@ class Request
 
     private function __construct()
     {
+        $this->method = $_SERVER['REQUEST_METHOD'];
         $this->query = $_GET;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        //Parse Url
+        $this->route = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        if ($this->method === 'POST') {
 
             $this->request = $_POST;
             $this->files = array_map(function ($item) {
                 return new UploadedFile(...$item);
             }, $_FILES);
 
-        } elseif ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+        } elseif ($this->method !== 'GET') {
 
-            $this->request = self::parseInput();
+            $this->request = $this->parseInput();
 
         }
 
@@ -62,9 +70,8 @@ class Request
         $this->headers = $headers;
     }
 
-    public static function parseInput(): array
+    private function parseInput(): array
     {
-        if(!isset(self::$php_input)) {
             $result = [];
             $raw = file_get_contents('php://input');
 
@@ -78,9 +85,7 @@ class Request
                     break;
             }
 
-            self::$php_input = $result;
-        }
-        return self::$php_input;
+        return $result;
     }
 
     public function file(string|array $field): ?UploadedFile
@@ -131,16 +136,6 @@ class Request
     public function toArray(): array
     {
         return $this->request;
-    }
-
-    public function path(): string
-    {
-        return Server::getServer()->getRoute();
-    }
-
-    public function method(): string
-    {
-        return $_SERVER['REQUEST_METHOD'];
     }
 
     public function ip(): string

@@ -20,8 +20,11 @@ class JWT
         }
     }
 
-    public function generate(array $payload): string
+    public function generate(array $payload, int $expire = null): string
     {
+        if($expire !== null) {
+            $payload['exp'] = $expire;
+        }
         $payload = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".$this->token_encode($payload);
         $sign = hash_hmac("sha256", $payload, $this->secret, true);
 
@@ -33,7 +36,11 @@ class JWT
         $token = explode(".", $token);
 
         if (hash_equals(hash_hmac("sha256", $token[0].".".$token[1], $this->secret, true), $this->token_decode($token[2], false))) {
-            return $this->token_decode($token[1]);
+            $token = $this->token_decode($token[1]);
+            if (isset($token['exp']) && time() > $token['exp']) {
+                return false;
+            }
+            return $token;
         } else {
             return false;
         }

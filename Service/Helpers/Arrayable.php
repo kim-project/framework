@@ -29,9 +29,7 @@ trait Arrayable
     protected static function getOnly(array|string|int $only, array $array): mixed
     {
         if (is_array($only)) {
-            return array_filter($array, function ($key) use ($only) {
-                return in_array($key, $only);
-            }, ARRAY_FILTER_USE_KEY);
+            return array_intersect_key($array, array_flip($only));
         } else {
             return array_key_exists($only, $array) ? $array[$only] : null;
         }

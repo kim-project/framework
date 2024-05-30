@@ -10,11 +10,11 @@ trait Singleton
     {
     }
 
-    private function __clone()
+    private function __clone(): void
     {
     }
 
-    final public function __wakeup()
+    final public function __wakeup(): void
     {
     }
 

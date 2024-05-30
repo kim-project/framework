@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="/public/css/DefaultStyles.css">
 </head>
 <body>
-    <form action="/login" method="post">
+    <form class="content" action="/login" method="post">
   <div class="container">
     <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="email" required>

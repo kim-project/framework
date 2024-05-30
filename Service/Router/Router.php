@@ -12,6 +12,10 @@ class Router
 
     private Server $server;
 
+    private array $routes = [];
+
+    private int $id = 0;
+
     protected function __construct()
     {
         $this->server = Server::getServer();
@@ -24,6 +28,10 @@ class Router
             $result[$param->name] = $data[$param->name];
         }
         return $result;
+    }
+
+    private function addRoute(string $route) {
+
     }
 
     /**
@@ -78,7 +86,7 @@ class Router
         }
 
         foreach (array_filter($routes) as $value) {
-            if (! Server::checkMethod($value['method'])) {
+            if (! $router->server->checkMethod($value['method'])) {
                 continue;
             }
             $route = $router->server->checkRoute($prefix.'/'.$value['route']);
@@ -104,7 +112,8 @@ class Router
     public static function route(array|string $method, string $route, array|callable $fun): void
     {
         $router = self::getInstance();
-        if (! Server::checkMethod($method)) {
+        $router->routes[$method];
+        if (! $router->server->checkMethod($method)) {
             return;
         }
         $route = $router->server->checkRoute($route);

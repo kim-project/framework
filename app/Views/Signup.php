@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
+    <link rel="stylesheet" href="/public/css/DefaultStyles.css">
 </head>
 <body>
-    <form action="/signup" method="post">
+    <form class="content" action="/signup" method="post">
   <div class="container">
     <label for="name"><b>Name</b></label>
     <input type="text" placeholder="Enter Email" name="name" required>

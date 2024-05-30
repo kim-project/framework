@@ -16,20 +16,22 @@ class Server
      */
     private array $route;
 
+    private Request $request;
+
     /**
      * initialize the server
      */
     protected function __construct()
     {
-        //Parse Route
+        session_start();
 
-        $route = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
+        $this->request = Request::getRequest();
         $this->route = array_values(
             array_filter(
-                explode('/', $route)
+                explode('/', strtolower($this->request->route))
             )
         );
+
 
         //CSRF Handler
 
@@ -45,9 +47,9 @@ class Server
         $GLOBALS['_PUT'] = [];
         $GLOBALS['_DELETE'] = [];
         if(self::checkMethod('put')) {
-            $GLOBALS['_PUT'] = Request::parseInput();
+            $GLOBALS['_PUT'] = (array) $this->request;
         } elseif (self::checkMethod('delete')) {
-            $GLOBALS['_DELETE'] = Request::parseInput();
+            $GLOBALS['_DELETE'] = (array) $this->request;
         }
 
         define('IS_API', isset($this->route[0]) && $this->route[0] === 'api');
@@ -60,14 +62,12 @@ class Server
      */
     public function start(): void
     {
-        session_start();
-
         try {
 
             if (IS_API) {
-                require 'Routes/api.php';
+                require 'routes/api.php';
             } else {
-                require 'Routes/web.php';
+                require 'routes/web.php';
             }
 
         } catch (\Throwable $th) {
@@ -86,11 +86,11 @@ class Server
      *
      * @return bool
      */
-    public static function checkMethod(string|array $method): bool
+    public function checkMethod(string|array $method): bool
     {
         if (is_array($method)) {
 
-            return in_array($_SERVER['REQUEST_METHOD'], $method);
+            return in_array($this->request->method, $method);
 
         } elseif ($method === 'any') {
 
@@ -98,7 +98,7 @@ class Server
 
         } else {
 
-            return $_SERVER['REQUEST_METHOD'] === strtoupper($method);
+            return $this->request->method === strtoupper($method);
 
         }
     }
@@ -115,7 +115,7 @@ class Server
     {
         $route = array_values(
             array_filter(
-                explode('/', $route)
+                explode('/', strtolower($route))
             )
         );
         if (IS_API) {
@@ -123,7 +123,7 @@ class Server
         }
 
         $data = [
-            'request' => Request::getRequest()
+            'request' => $this->request
         ];
 
         if (count($route) > count($this->route)) {
@@ -140,7 +140,7 @@ class Server
 
                 $data[substr($value, 1)] = $this->route[$key];
 
-            } elseif (strtolower($value) !== strtolower($this->route[$key])) {
+            } elseif ($value !== $this->route[$key]) {
 
                 return false;
 
@@ -149,15 +149,5 @@ class Server
         }
 
         return $data;
-    }
-
-    /**
-     * Get current request's route
-     *
-     * @return string
-     */
-    public function getRoute(): string
-    {
-        return '/'.implode('/', $this->route);
     }
 }
