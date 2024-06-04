@@ -4,7 +4,10 @@ namespace Kim\Support\Helpers;
 
 trait Singleton
 {
-    protected static $instance;
+    /**
+     * @var object The instance of the singleton
+     */
+    protected static object $instance;
 
     protected function __construct()
     {
@@ -18,6 +21,11 @@ trait Singleton
     {
     }
 
+    /**
+     * Get the singleton's instance
+     *
+     * @return self The instance
+     */
     public static function getInstance(): self
     {
         return isset(static::$instance)

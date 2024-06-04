@@ -2,7 +2,6 @@
 
 namespace Kim\Service\Request;
 
-use Kim\Service\Router\Server;
 use Kim\Support\Helpers\Arrayable;
 use Kim\Support\Helpers\Singleton;
 
@@ -49,6 +48,8 @@ class Request
 
         }
 
+        $this->getRequestHeaders();
+
         $this->cookie = $_COOKIE;
         $this->session = $_SESSION;
     }
@@ -72,18 +73,18 @@ class Request
 
     private function parseInput(): array
     {
-            $result = [];
-            $raw = file_get_contents('php://input');
+        $result = [];
+        $raw = file_get_contents('php://input');
 
-            switch (explode(';', $_SERVER['CONTENT_TYPE'])[0]) {
-                case 'application/json':
-                    $result = json_decode($raw, true);
-                    break;
+        switch (explode(';', $_SERVER['CONTENT_TYPE'])[0]) {
+            case 'application/json':
+                $result = json_decode($raw, true);
+                break;
 
-                case 'application/x-www-form-urlencoded':
-                    parse_str($raw, $result);
-                    break;
-            }
+            case 'application/x-www-form-urlencoded':
+                parse_str($raw, $result);
+                break;
+        }
 
         return $result;
     }

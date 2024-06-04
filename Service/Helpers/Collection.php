@@ -2,10 +2,13 @@
 
 namespace Kim\Support\Helpers;
 
-class Collection {
-
+class Collection
+{
     use Arrayable;
 
+    /**
+     * @var array The Collection's data
+     */
     protected array $collection;
 
     public function __construct(array $collection)

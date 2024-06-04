@@ -1,7 +1,6 @@
 <?php
 
 use app\Controllers\UserController;
-use Kim\Service\Request\Request;
 use Kim\Service\Router\Route;
 use Kim\Service\Router\Router;
 
@@ -15,6 +14,3 @@ Router::controller('/', UserController::class, [
     Route::get('/signup', 'getSignup'),
     Route::post('/signup', 'signup'),
 ]);
-Router::get('/header', function (Request $request) {
-    return $_COOKIE;
-});

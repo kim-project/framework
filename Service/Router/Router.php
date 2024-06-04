@@ -30,7 +30,8 @@ class Router
         return $result;
     }
 
-    private function addRoute(string $route) {
+    private function addRoute(string $route)
+    {
 
     }
 

@@ -5,9 +5,7 @@ namespace Kim\Support\Database;
 class DB
 {
     /**
-     * The database connection
-     *
-     * @var \mysqli|\PDO
+     * @var \mysqli|\PDO The database connection
      */
     private static \mysqli|\PDO $connection;
 
@@ -19,7 +17,7 @@ class DB
     /**
      * Create connection to database
      *
-     * @return \mysqli|\PDO
+     * @return \mysqli|\PDO Database connection
      */
     private static function conn(): \mysqli|\PDO
     {
@@ -70,7 +68,7 @@ class DB
     /**
      * Get the connection
      *
-     * @return \mysqli
+     * @return \mysqli|\PDO Database connection
      */
     public static function core(): \mysqli|\PDO
     {
@@ -97,7 +95,7 @@ class DB
      *
      * @param  string  $sql  The sql query to run
      *
-     * @return bool|\mysqli_result|int
+     * @return bool|\mysqli_result|int The execution result
      */
     public static function sql(string $sql): bool|\mysqli_result|int
     {
@@ -119,7 +117,7 @@ class DB
      *
      * @param  string  $sql  The sql query to run
      *
-     * @return array[]
+     * @return array[] The query result
      */
     public static function fetch(string $sql): array
     {
@@ -146,7 +144,7 @@ class DB
      *
      * @param  string  $sql  The sql query to run
      *
-     * @return array|null
+     * @return array|null The first result of query
      */
     public static function first(string $sql): array|null
     {

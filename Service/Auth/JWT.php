@@ -8,6 +8,10 @@ use Kim\Support\Provider\Commands;
 class JWT
 {
     use Singleton {getInstance as core;}
+
+    /**
+     * @var string The JWT hash secret
+     */
     private string $secret;
 
     private function __construct()
@@ -20,23 +24,38 @@ class JWT
         }
     }
 
-    public function generate(array $payload, int $expire = null): string
+    /**
+     * Generate JWT token with custom payload
+     *
+     * @param array $payload The payload of the token
+     * @param ?int $expire The expire time of the token
+     *
+     * @return string The JWT token
+     */
+    public function generate(array $payload, ?int $expire = null): string
     {
         if($expire !== null) {
             $payload['exp'] = $expire;
         }
-        $payload = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".$this->token_encode($payload);
+        $payload = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".$this->base64urlEncode($payload);
         $sign = hash_hmac("sha256", $payload, $this->secret, true);
 
-        return $payload.".".$this->token_encode($sign);
+        return $payload.".".$this->base64urlEncode($sign);
     }
 
+    /**
+     * Verify the JWT token
+     *
+     * @param string $token The JWT token
+     *
+     * @return array|false returns the payload if valid and false for invalid
+     */
     public function verify(string $token): array|bool
     {
         $token = explode(".", $token);
 
-        if (hash_equals(hash_hmac("sha256", $token[0].".".$token[1], $this->secret, true), $this->token_decode($token[2], false))) {
-            $token = $this->token_decode($token[1]);
+        if (hash_equals(hash_hmac("sha256", $token[0].".".$token[1], $this->secret, true), $this->base64urlDecode($token[2], false))) {
+            $token = $this->base64urlDecode($token[1]);
             if (isset($token['exp']) && time() > $token['exp']) {
                 return false;
             }
@@ -46,7 +65,14 @@ class JWT
         }
     }
 
-    private function token_encode(array|string $payload): string
+    /**
+     * Base64 Url Encode
+     *
+     * @param array|string $payload The data to encode
+     *
+     * @return string returns the base64 url encoded string
+     */
+    private function base64urlEncode(array|string $payload): string
     {
         if (is_array($payload)) {
             $payload = json_encode($payload);
@@ -57,7 +83,15 @@ class JWT
         return rtrim($payload, '=');
     }
 
-    private function token_decode(string $token, bool $is_payload = true): string|array
+    /**
+     * Base64 Url Decode
+     *
+     * @param string $token The encoded data
+     * @param bool $is_payload If the encoded data is payload (array)
+     *
+     * @return string|array returns the base64 url encoded data
+     */
+    private function base64urlDecode(string $token, bool $is_payload = true): string|array
     {
         $token = base64_decode(strtr($token, '-_', '+/'));
 

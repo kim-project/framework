@@ -10,12 +10,13 @@ class Server
     use Singleton {getInstance as getServer;}
 
     /**
-     * The request route
-     *
-     * @var string[]
+     * @var string[] The request route
      */
     private array $route;
 
+    /**
+     * @var Request The request instance
+     */
     private Request $request;
 
     /**
