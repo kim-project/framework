@@ -104,7 +104,6 @@ class Router
     public static function route(array|string $method, string $route, array|callable $fun): void
     {
         $router = self::getInstance();
-        $router->routes[$method];
         if (! $router->server->checkMethod($method)) {
             return;
         }
