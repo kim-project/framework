@@ -3,9 +3,8 @@
 namespace namespace:;
 
 use Kim\Support\Database\DB;
-use Kim\Support\Provider\Model;
 
-class name: extends Model {
+class name: {
 
     public static function select(string $where) : array
     {
@@ -14,7 +13,7 @@ class name: extends Model {
 
     public static function find(string|int $id) : array|null
     {
-        return DB::first("SELECT * FROM table: WHERE `id`='$id'");
+        return DB::first("SELECT * FROM table: WHERE id='$id'");
     }
 
     public static function first(string $where): array|null
@@ -24,7 +23,7 @@ class name: extends Model {
 
     public static function delete(string|int $id) : bool
     {
-        return DB::sql("DELETE FROM table: WHERE `id`='$id'");
+        return DB::sql("DELETE FROM table: WHERE id='$id'");
     }
 
 }

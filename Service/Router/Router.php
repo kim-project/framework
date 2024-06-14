@@ -12,10 +12,6 @@ class Router
 
     private Server $server;
 
-    private array $routes = [];
-
-    private int $id = 0;
-
     protected function __construct()
     {
         $this->server = Server::getServer();
@@ -28,11 +24,6 @@ class Router
             $result[$param->name] = $data[$param->name];
         }
         return $result;
-    }
-
-    private function addRoute(string $route)
-    {
-
     }
 
     /**
