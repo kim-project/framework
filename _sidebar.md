@@ -14,5 +14,9 @@
     - [Using core PHP](Controllers/Using-core-PHP.md)
     - [Kim's Request Handler](Controllers/Request-Handler.md)
   - [Files](Controllers/Files.md)
+- Database
+  - [Connection](Database/Connection.md)
+  - [DB](Database/DB.md)
+  - [Model Files](Database/Model-Files.md)
 - Views
   - [View Files](Views/View-Files.md)
