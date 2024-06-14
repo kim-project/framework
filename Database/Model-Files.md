@@ -120,22 +120,22 @@ class Post {
 
     public static function select(string $where) : array
     {
-        return DB::fetch("SELECT * FROM `post` $where");
+        return DB::fetch("SELECT * FROM post $where");
     }
 
     public static function find(string|int $id) : array|null
     {
-        return DB::first("SELECT * FROM `post` WHERE `id`='$id'");
+        return DB::first("SELECT * FROM post WHERE id='$id'");
     }
 
     public static function first(string $where): array|null
     {
-        return DB::first("SELECT * FROM `post` $where");
+        return DB::first("SELECT * FROM post $where");
     }
 
     public static function delete(string|int $id) : bool
     {
-        return DB::sql("DELETE FROM `post` WHERE `id`='$id'");
+        return DB::sql("DELETE FROM post WHERE id='$id'");
     }
 
 }
@@ -151,9 +151,9 @@ now we can use the function we created to execute sql queries
 ```php
 use app\Models\Post;
 
-$posts = Post::select("WHERE `category`='update'"); //List of all posts with the 'update' category
+$posts = Post::select("WHERE category='update'"); //List of all posts with the 'update' category
 
-$latestpost = Post::first("ORDER BY `Date` DESC"); //Getting the latest post    
+$latestpost = Post::first("ORDER BY Date DESC"); //Getting the latest post    
 $latestpost['title']; //title of the latest post
 
 $post = Post::find('12301') //Find post by id
