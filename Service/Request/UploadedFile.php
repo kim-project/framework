@@ -7,30 +7,22 @@ use Kim\Support\Helpers\File;
 class UploadedFile extends File
 {
     /**
-     * The uploaded file name
-     *
-     * @var string
+     * @var string The uploaded file name
      */
     private string $name;
 
     /**
-     * The uploaded file type
-     *
-     * @var string
+     * @var string The uploaded file type
      */
     private string $type;
 
     /**
-     * The uploaded file full_path
-     *
-     * @var string
+     * @var string The uploaded file full_path
      */
     private string $full_path;
 
     /**
-     * The uploaded file size
-     *
-     * @var int
+     * @var int The uploaded file size
      */
     public int $size;
 
@@ -52,9 +44,9 @@ class UploadedFile extends File
      * @param  string  $path  The path in to save the file in
      * @param  bool  $toStorage  If you want to save the file outside the Storage folder set this to false
      *
-     * @return string|false
+     * @return bool If the save was successful
      */
-    public function save(string $path, bool $toStorage = true): string|bool
+    public function save(string $path, bool $toStorage = true): bool
     {
         $path = array_filter(
             explode('/', $path)
@@ -65,7 +57,7 @@ class UploadedFile extends File
         self::checkFileDir($path);
         $path = implode('/', $path);
         if (move_uploaded_file($this->path, $path)) {
-            return $path;
+            return true;
         } else {
             return false;
         }
@@ -74,7 +66,7 @@ class UploadedFile extends File
     /**
      * Get file's size in bytes
      *
-     * @return int
+     * @return int file's size
      */
     public function size(): int
     {
@@ -84,7 +76,7 @@ class UploadedFile extends File
     /**
      * Get file's uploaded name
      *
-     * @return string
+     * @return string file's uploaded name
      */
     public function name(): string
     {
@@ -94,7 +86,7 @@ class UploadedFile extends File
     /**
      * Get file's uploaded type
      *
-     * @return string
+     * @return string file's uploaded type
      */
     public function type(): string
     {

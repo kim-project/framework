@@ -1,6 +1,7 @@
 <?php
 
 use Kim\Service\Auth\JWT;
+use Kim\Support\Helpers\Collection;
 use Kim\Support\Helpers\File;
 use Kim\Support\Helpers\Response;
 
@@ -9,7 +10,7 @@ use Kim\Support\Helpers\Response;
  *
  * @param  int  $error_code  http error code
  *
- * @return string
+ * @return string error message
  */
 function get_error_message(int $error_code): string
 {
@@ -40,7 +41,7 @@ function get_error_message(int $error_code): string
  * @param  string  $message  error message if the status code is an error
  * @param  bool  $api  if the error should be json
  *
- * @return Response
+ * @return Response The response
  */
 function response(int $status = 200, string $message = '', ?bool $api = null): Response
 {
@@ -49,12 +50,12 @@ function response(int $status = 200, string $message = '', ?bool $api = null): R
         throw new Exception($message, $status);
     } elseif ($status >= 400) {
         if ($api) {
-            (new Response($status))->Json([
+            (new Response($status))->json([
                 'status' => $status,
                 'message' => $message,
             ])();
         }
-        (new Response($status))->View('errors.php', [
+        (new Response($status))->view('errors.php', [
             'message' => $message,
             'status' => $status,
         ])();
@@ -72,8 +73,7 @@ function response(int $status = 200, string $message = '', ?bool $api = null): R
  */
 function redirect(string $url): void
 {
-    header("Location: $url");
-    die;
+    (new Response())->redirect($url)();
 }
 
 /**
@@ -82,7 +82,7 @@ function redirect(string $url): void
  * @param  string  $path  The path in which the file should be created
  * @param  string  $content  The content to put in the file
  *
- * @return File
+ * @return File The file
  */
 function createFile(string $path, string $content = ''): File
 {
@@ -99,7 +99,7 @@ function createFile(string $path, string $content = ''): File
  *
  * @param  string  $path  The path in which the file should be created
  *
- * @return File
+ * @return ?File The file if exists
  */
 function getFile(string $path): ?File
 {
@@ -108,6 +108,18 @@ function getFile(string $path): ?File
     } else {
         return null;
     }
+}
+
+/**
+ * Get a Collection
+ *
+ * @param  array  $array  The array to collect
+ *
+ * @return Collection The collection of array
+ */
+function collect(array $array): Collection
+{
+    return new Collection($array);
 }
 
 /**
@@ -120,13 +132,18 @@ function csrf(): bool
     $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 
     if (! $token || $token !== $_SESSION['token']) {
-        Response(405, 'Method Not Allowed');
+        response(405, 'Method Not Allowed');
         exit;
     }
 
     return true;
 }
 
+/**
+ * Get the JWT core
+ *
+ * @return JWT The JWT instance
+ */
 function JWT(): JWT
 {
     return JWT::core();

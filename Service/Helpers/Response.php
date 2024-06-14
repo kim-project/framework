@@ -7,18 +7,31 @@ use Kim\Support\Provider\View;
 
 class Response
 {
+    /**
+     * @var ?int Status code of the response
+     */
     private ?int $status;
 
+    /**
+     * @var View|File|Arrayable|array|string|null The response's body
+     */
     private View|File|Arrayable|array|string|null $res;
 
+    /**
+     * @var string[] The response's headers
+     */
     private array $headers = [];
 
+    /**
+     * @var bool If the file response should force download
+     */
     private bool $download = false;
 
     /**
      * Create Response
      *
      * @param ?int $status Http status code of the response
+     * @param mixed $res The response body
      */
     public function __construct(?int $status = null, mixed $res = null)
     {
@@ -26,6 +39,9 @@ class Response
         $this->res = $res;
     }
 
+    /**
+     * Send the response
+     */
     public function __invoke()
     {
         if (isset($this->status)) {
@@ -58,9 +74,17 @@ class Response
         exit;
     }
 
-    public function status(int $status)
+    /**
+     * Set response status code
+     *
+     * @param  int  $status  The status code
+     *
+     * @return Response
+     */
+    public function status(int $status): self
     {
         $this->status = $status;
+        return $this;
     }
 
     /**
@@ -78,7 +102,7 @@ class Response
         }
         $view = "app/Views/$view";
         if (!file_exists($view)) {
-            throw new \Exception("View $view not found", 503);
+            throw new \Exception("View $view not found");
         }
         $this->res = new View($view, $data);
         return $this;

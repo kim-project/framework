@@ -5,9 +5,7 @@ namespace Kim\Support\Helpers;
 class File
 {
     /**
-     * The path to file
-     *
-     * @var string
+     * @var string The path to file
      */
     protected string $path;
 
@@ -27,7 +25,7 @@ class File
     /**
      * Get file's path
      *
-     * @return string
+     * @return string The path to file
      */
     public function path(): string
     {
@@ -37,7 +35,7 @@ class File
     /**
      * Get file's last modification time
      *
-     * @return int|bool
+     * @return int|bool file's last modification time
      */
     public function lastModified(): int|bool
     {
@@ -47,7 +45,7 @@ class File
     /**
      * Get file's mime type
      *
-     * @return string|false
+     * @return string|false file's mime type
      */
     public function mimeType(): string|bool
     {
@@ -57,7 +55,7 @@ class File
     /**
      * Get file's size in bytes
      *
-     * @return int|false
+     * @return int|false file's size
      */
     public function size(): int|bool
     {
@@ -67,7 +65,7 @@ class File
     /**
      * Get file's name
      *
-     * @return string
+     * @return string file's name
      */
     public function name(): string
     {
@@ -79,7 +77,7 @@ class File
      *
      * @param  mixed  $content  Content to write to file
      *
-     * @return int|false
+     * @return int|false number of bytes written
      */
     public function write($content): int|bool
     {
@@ -89,7 +87,7 @@ class File
     /**
      * Read file content
      *
-     * @return string|false
+     * @return string|false file's content
      */
     public function read(): string|bool
     {
@@ -99,7 +97,7 @@ class File
     /**
      * Read json file's content
      *
-     * @return array
+     * @return array Json decoded file content
      */
     public function json(): array
     {

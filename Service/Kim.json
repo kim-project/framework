@@ -1,5 +1,5 @@
 {
-    "version": "0.6.0",
+    "version": "0.6.2",
     "files": [
         "/.env.example",
         "/.htaccess",
@@ -14,9 +14,11 @@
         "/Service/Database/DB.php",
         "/Service/Database/Model.php",
         "/Service/Helpers/Arrayable.php",
+        "/Service/Helpers/Collection.php",
         "/Service/Helpers/Config.php",
         "/Service/Helpers/File.php",
         "/Service/Helpers/Response.php",
+        "/Service/Helpers/Singleton.php",
         "/Service/Provider/Commands.php",
         "/Service/Provider/Controller.php",
         "/Service/Provider/View.php",

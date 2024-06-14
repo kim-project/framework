@@ -2,8 +2,16 @@
 
 use Kim\Support\Helpers\Config;
 
+/**
+ * Load the .env file
+ *
+ * @return void
+ */
 function loadEnv(): void
 {
+    if (!file_exists(__ROOT__.'/.env')) {
+        return;
+    }
     $conf = parse_ini_file(__ROOT__.'/.env');
     foreach ($conf as $key => $val) {
         if(isset($val) && $val !== '') {
@@ -14,6 +22,14 @@ function loadEnv(): void
     }
 }
 
+/**
+ * Get env value
+ *
+ * @param string $key The env value to get
+ * @param mixed $default The default value if the env was empty
+ *
+ * @return mixed The value
+ */
 function env(string $key, mixed $default = null): mixed
 {
     if(isset($_ENV[$key])) {
@@ -23,6 +39,13 @@ function env(string $key, mixed $default = null): mixed
     }
 }
 
+/**
+ * Get config value
+ *
+ * @param string $key The config value to get
+ *
+ * @return mixed The value
+ */
 function config(string $key): mixed
 {
     return Config::getConfig($key);

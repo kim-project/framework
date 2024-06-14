@@ -4,8 +4,10 @@ namespace Kim\Service\Request;
 
 use Kim\Support\Helpers\Arrayable;
 
-class Validator extends Arrayable
+class Validator
 {
+    use Arrayable;
+
     private array $validated = [];
 
     private array $errors = [];

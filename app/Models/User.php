@@ -13,7 +13,7 @@ class User
 
     public static function find(string|int $id): array|null
     {
-        return DB::first("SELECT * FROM user WHERE `id`='$id'");
+        return DB::first("SELECT * FROM user WHERE id='$id'");
     }
 
     public static function first(string $where): array|null
@@ -23,6 +23,6 @@ class User
 
     public static function delete(string|int $id): bool
     {
-        return DB::sql("DELETE FROM user WHERE `id`='$id'");
+        return DB::sql("DELETE FROM user WHERE id='$id'");
     }
 }

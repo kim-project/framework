@@ -4,8 +4,10 @@ namespace Kim\Support\Database;
 
 use Kim\Support\Helpers\Arrayable;
 
-abstract class M extends Arrayable
+abstract class M
 {
+    use Arrayable;
+
     /**
      * The table associated with the model.
      *
@@ -72,7 +74,7 @@ abstract class M extends Arrayable
         if (DB::sql('INSERT INTO '.self::$table." ($keys) VALUES ($values)")) {
             return DB::core()->insert_id;
         } else {
-            throw new \Exception(DB::core()->error, 503);
+            throw new \Exception(DB::core()->error);
         }
     }
 
@@ -86,7 +88,7 @@ abstract class M extends Arrayable
         if (DB::sql('UPDATE '.self::$table." SET $values".self::whereId($this->id))) {
             return DB::core()->insert_id;
         } else {
-            throw new \Exception(DB::core()->error, 503);
+            throw new \Exception(DB::core()->error);
         }
     }
 
@@ -95,7 +97,7 @@ abstract class M extends Arrayable
         if (DB::sql('DELETE FROM '.self::$table.self::whereId($this->id))) {
             return true;
         } else {
-            throw new \Exception(DB::core()->error, 503);
+            throw new \Exception(DB::core()->error);
         }
     }
 

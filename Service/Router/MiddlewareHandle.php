@@ -38,7 +38,7 @@ class MiddlewareHandle
         $next = $this->next;
         foreach ($this->middlewares as $middleware) {
             if(!$middleware instanceof Middleware) {
-                throw new \Exception("$middleware is not a Middleware", 503);
+                throw new \Exception("$middleware is not a Middleware");
             }
             $next = fn (Request $request): Response => $middleware->handle($request, $next);
         }

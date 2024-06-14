@@ -2,20 +2,24 @@
 
 namespace Kim\Service\Request;
 
-use Kim\Service\Router\Server;
 use Kim\Support\Helpers\Arrayable;
+use Kim\Support\Helpers\Singleton;
 
-class Request extends Arrayable
+class Request
 {
-    private static ?self $instance = null;
+    use Arrayable, Singleton {Singleton::getInstance as getRequest;}
 
     private static array $php_input;
+
+    public string $method;
+
+    public string $route;
 
     private array $files = [];
 
     private array $query = [];
 
-    public array $request = [];
+    private array $request = [];
 
     private array $headers = [];
 
@@ -25,32 +29,29 @@ class Request extends Arrayable
 
     private function __construct()
     {
+        $this->method = $_SERVER['REQUEST_METHOD'];
         $this->query = $_GET;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        //Parse Url
+        $this->route = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        if ($this->method === 'POST') {
 
             $this->request = $_POST;
             $this->files = array_map(function ($item) {
                 return new UploadedFile(...$item);
             }, $_FILES);
 
-        } elseif ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+        } elseif ($this->method !== 'GET') {
 
-            $this->request = self::parseInput();
+            $this->request = $this->parseInput();
 
         }
+
+        $this->getRequestHeaders();
 
         $this->cookie = $_COOKIE;
         $this->session = $_SESSION;
-    }
-
-    public static function getRequest(): self
-    {
-        if(!self::$instance) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
     }
 
     private function getRequestHeaders(): void
@@ -70,25 +71,22 @@ class Request extends Arrayable
         $this->headers = $headers;
     }
 
-    public static function parseInput(): array
+    private function parseInput(): array
     {
-        if(!isset(self::$php_input)) {
-            $result = [];
-            $raw = file_get_contents('php://input');
+        $result = [];
+        $raw = file_get_contents('php://input');
 
-            switch (explode(';', $_SERVER['CONTENT_TYPE'])[0]) {
-                case 'application/json':
-                    $result = json_decode($raw, true);
-                    break;
+        switch (explode(';', $_SERVER['CONTENT_TYPE'])[0]) {
+            case 'application/json':
+                $result = json_decode($raw, true);
+                break;
 
-                case 'application/x-www-form-urlencoded':
-                    parse_str($raw, $result);
-                    break;
-            }
-
-            self::$php_input = $result;
+            case 'application/x-www-form-urlencoded':
+                parse_str($raw, $result);
+                break;
         }
-        return self::$php_input;
+
+        return $result;
     }
 
     public function file(string|array $field): ?UploadedFile
@@ -139,16 +137,6 @@ class Request extends Arrayable
     public function toArray(): array
     {
         return $this->request;
-    }
-
-    public function path(): string
-    {
-        return Server::getRoute();
-    }
-
-    public function method(): string
-    {
-        return $_SERVER['REQUEST_METHOD'];
     }
 
     public function ip(): string
