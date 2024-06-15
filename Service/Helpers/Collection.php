@@ -42,7 +42,8 @@ class Collection
      *
      * @return Collection returns the updated collection
      */
-    public function flip(): self {
+    public function flip(): self
+    {
         $this->collection = array_flip($this->collection);
         return $this;
     }

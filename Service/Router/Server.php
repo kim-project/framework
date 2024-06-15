@@ -56,26 +56,22 @@ class Server
         define('IS_API', isset($this->route[0]) && $this->route[0] === 'api');
     }
 
-    /**
-     * Start router files and route handling
-     *
-     * @return void
-     */
-    public function start(): void
+    public function routes(string $prefix, string $dir)
     {
+        $prefix = array_values(
+            array_filter(
+                explode('/', strtolower($prefix))
+            )
+        );
+        if (!$this->checkRoute($prefix, false)) {
+            return;
+        }
+        $this->route = array_values(array_diff_assoc($this->route, $prefix));
+
         try {
-
-            if (IS_API) {
-                require 'routes/api.php';
-            } else {
-                require 'routes/web.php';
-            }
-
+            require $dir;
         } catch (\Throwable $th) {
-
             response(500, $th->getMessage());
-            exit;
-
         }
         response(404, 'Page not found');
     }
@@ -112,15 +108,14 @@ class Server
      *
      * @return false|array returns array of route params
      */
-    public function checkRoute(string $route, bool $exact = true): bool|array
+    public function checkRoute(string|array $route, bool $exact = true): bool|array
     {
-        $route = array_values(
-            array_filter(
-                explode('/', strtolower($route))
-            )
-        );
-        if (IS_API) {
-            array_unshift($route, 'api');
+        if (!is_array($route)) {
+            $route = array_values(
+                array_filter(
+                    explode('/', strtolower($route))
+                )
+            );
         }
 
         $data = [
@@ -139,7 +134,9 @@ class Server
 
             if (substr($value, 0, 1) === ':') {
 
-                $data[substr($value, 1)] = $this->route[$key];
+                if ($exact) {
+                    $data[substr($value, 1)] = $this->route[$key];
+                }
 
             } elseif ($value !== $this->route[$key]) {
 

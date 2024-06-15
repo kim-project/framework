@@ -22,4 +22,7 @@ if (php_sapi_name() === 'cli-server') {
     }
 }
 
-\Kim\Service\Router\Server::getServer()->start();
+$app = \Kim\Service\Router\Server::getServer();
+
+$app->routes('/api', 'routes/api.php');
+$app->routes('/', 'routes/web.php');
