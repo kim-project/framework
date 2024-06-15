@@ -7,7 +7,7 @@ trait Arrayable
     /**
      * convert object to array
      *
-     * @return array
+     * @return array serialized object
      */
     abstract public function toArray(): array;
 
@@ -24,6 +24,9 @@ trait Arrayable
     /**
      * get specified elements from array
      *
+     * @param array|string|int $only the element(s) to return
+     * @param array $array the array to search for the keys
+     *
      * @return mixed|mixed[] element or array of elements
      */
     protected static function getOnly(array|string|int $only, array $array): mixed
@@ -37,6 +40,8 @@ trait Arrayable
 
     /**
      * get specified elements
+     *
+     * @param array|string|int $only the element(s) to return
      *
      * @return mixed|mixed[] element or array of elements
      */
