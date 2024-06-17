@@ -1,20 +1,21 @@
 <?php
 
-namespace Kim\Service\Router;
+namespace Kim\Router;
 
-use Kim\Support\Helpers\Response;
-use Kim\Support\Helpers\Singleton;
-use Kim\Support\Provider\Controller;
+use Kim\Core\KimApp;
+use Kim\Support\Response;
+use Kim\Support\Singleton;
+use Kim\Provider\Controller;
 
 class Router
 {
     use Singleton {getInstance as protected;}
 
-    private Server $server;
+    private KimApp $server;
 
     protected function __construct()
     {
-        $this->server = Server::getServer();
+        $this->server = KimApp::getInstance();
     }
 
     private function parseParam(\ReflectionMethod|\ReflectionFunction $f, array $data): array

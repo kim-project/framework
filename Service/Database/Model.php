@@ -1,8 +1,8 @@
 <?php
 
-namespace Kim\Support\Database;
+namespace Kim\Database;
 
-use Kim\Support\Helpers\Arrayable;
+use Kim\Support\Arrayable;
 
 abstract class M
 {

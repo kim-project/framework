@@ -1,8 +1,8 @@
 <?php
 
-namespace Kim\Service\Request;
+namespace Kim\Request;
 
-use Kim\Support\Helpers\Arrayable;
+use Kim\Support\Arrayable;
 
 class Validator
 {

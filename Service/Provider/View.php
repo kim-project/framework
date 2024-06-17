@@ -1,6 +1,6 @@
 <?php
 
-namespace Kim\Support\Provider;
+namespace Kim\Provider;
 
 class View
 {

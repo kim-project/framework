@@ -1,8 +1,8 @@
 <?php
 
-namespace Kim\Service\Request;
+namespace Kim\Request;
 
-use Kim\Support\Helpers\File;
+use Kim\Support\File;
 
 class UploadedFile extends File
 {

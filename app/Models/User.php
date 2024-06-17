@@ -2,7 +2,7 @@
 
 namespace app\Models;
 
-use Kim\Support\Database\DB;
+use Kim\Database\DB;
 
 class User
 {

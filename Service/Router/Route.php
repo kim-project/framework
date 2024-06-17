@@ -1,6 +1,6 @@
 <?php
 
-namespace Kim\Service\Router;
+namespace Kim\Router;
 
 class Route
 {

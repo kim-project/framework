@@ -1,9 +1,9 @@
 <?php
 
-namespace Kim\Support\Helpers;
+namespace Kim\Support;
 
-use Kim\Support\Database\DB;
-use Kim\Support\Provider\View;
+use Kim\Database\DB;
+use Kim\Provider\View;
 
 class Response
 {

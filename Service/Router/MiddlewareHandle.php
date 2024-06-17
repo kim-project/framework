@@ -1,11 +1,11 @@
 <?php
 
-namespace Kim\Service\Router;
+namespace Kim\Router;
 
 use Closure;
-use Kim\Service\Request\Request;
-use Kim\Support\Helpers\Response;
-use Kim\Support\Provider\Middleware;
+use Kim\Request\Request;
+use Kim\Support\Response;
+use Kim\Provider\Middleware;
 
 class MiddlewareHandle
 {
@@ -33,7 +33,7 @@ class MiddlewareHandle
         $this->input = $input;
     }
 
-    public function Handle(): Response
+    public function handle(): Response
     {
         $next = $this->next;
         foreach ($this->middlewares as $middleware) {

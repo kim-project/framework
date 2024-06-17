@@ -1,9 +1,9 @@
 <?php
 
-namespace Kim\Service\Request;
+namespace Kim\Request;
 
-use Kim\Support\Helpers\Arrayable;
-use Kim\Support\Helpers\Singleton;
+use Kim\Support\Arrayable;
+use Kim\Support\Singleton;
 
 class Request
 {

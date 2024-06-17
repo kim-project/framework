@@ -12,6 +12,8 @@ define('__ROOT__', __DIR__);
 
 require_once 'Service/Autoload.php';
 
+use Kim\Core\KimApp;
+
 if (php_sapi_name() === 'cli-server') {
     if (preg_match('/^\/public\//i', $_SERVER['REQUEST_URI'])) {
         if (file_exists('.'.$_SERVER['REQUEST_URI'])) {
@@ -22,7 +24,7 @@ if (php_sapi_name() === 'cli-server') {
     }
 }
 
-$app = \Kim\Service\Router\Server::getServer();
+$app = KimApp::create();
 
 $app->routes('/api', 'routes/api.php');
 $app->routes('/', 'routes/web.php');

@@ -1,13 +1,13 @@
 <?php
 
-namespace Kim\Service\Router;
+namespace Kim\Core;
 
-use Kim\Service\Request\Request;
-use Kim\Support\Helpers\Singleton;
+use Kim\Request\Request;
+use Kim\Support\Singleton;
 
-class Server
+class KimApp
 {
-    use Singleton {getInstance as getServer;}
+    use Singleton{getInstance as create;}
 
     /**
      * @var string[] The request route

@@ -14,7 +14,7 @@ define('__ROOT__', __DIR__);
 require_once 'Service/Autoload.php';
 
 if (!isset($argv[1])) {
-    \Kim\Support\Provider\Commands::Kim();
+    \Kim\Console\Commands::kim();
     exit;
 }
 
@@ -22,34 +22,34 @@ switch (strtolower($argv[1])) {
     case 'start':
     case 's':
     case 'serve':
-        \Kim\Support\Provider\Commands::Start();
+        \Kim\Console\Commands::start();
         break;
 
     case 'make:c':
     case 'make:controller':
     case 'm:controller':
-        \Kim\Support\Provider\Commands::CreateController();
+        \Kim\Console\Commands::createController();
         break;
 
     case 'make:m':
     case 'make:model':
     case 'm:model':
-        \Kim\Support\Provider\Commands::CreateModel();
+        \Kim\Console\Commands::createModel();
         break;
 
     case 'make:v':
     case 'make:view':
     case 'm:view':
-        \Kim\Support\Provider\Commands::CreateView();
+        \Kim\Console\Commands::createView();
         break;
 
     case 'update':
     case 'upgrade':
     case 'u':
-        \Kim\Support\Provider\Commands::Update();
+        \Kim\Console\Commands::update();
         break;
 
     default:
-        \Kim\Support\Provider\Commands::Kim();
+        \Kim\Console\Commands::kim();
         break;
 }

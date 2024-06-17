@@ -1,9 +1,9 @@
 <?php
 
-namespace Kim\Service\Auth;
+namespace Kim\Auth;
 
-use Kim\Support\Helpers\Singleton;
-use Kim\Support\Provider\Commands;
+use Kim\Support\Singleton;
+use Kim\Console\Commands;
 
 class JWT
 {
@@ -37,10 +37,10 @@ class JWT
         if($expire !== null) {
             $payload['exp'] = $expire;
         }
-        $payload = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".$this->base64urlEncode($payload);
+        $payload = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.".$this->base64UrlEncode($payload);
         $sign = hash_hmac("sha256", $payload, $this->secret, true);
 
-        return $payload.".".$this->base64urlEncode($sign);
+        return $payload.".".$this->base64UrlEncode($sign);
     }
 
     /**
@@ -54,8 +54,8 @@ class JWT
     {
         $token = explode(".", $token);
 
-        if (hash_equals(hash_hmac("sha256", $token[0].".".$token[1], $this->secret, true), $this->base64urlDecode($token[2], false))) {
-            $token = $this->base64urlDecode($token[1]);
+        if (hash_equals(hash_hmac("sha256", $token[0].".".$token[1], $this->secret, true), $this->base64UrlDecode($token[2], false))) {
+            $token = $this->base64UrlDecode($token[1]);
             if (isset($token['exp']) && time() > $token['exp']) {
                 return false;
             }
@@ -72,7 +72,7 @@ class JWT
      *
      * @return string returns the base64 url encoded string
      */
-    private function base64urlEncode(array|string $payload): string
+    private function base64UrlEncode(array|string $payload): string
     {
         if (is_array($payload)) {
             $payload = json_encode($payload);
@@ -91,7 +91,7 @@ class JWT
      *
      * @return string|array returns the base64 url encoded data
      */
-    private function base64urlDecode(string $token, bool $is_payload = true): string|array
+    private function base64UrlDecode(string $token, bool $is_payload = true): string|array
     {
         $token = base64_decode(strtr($token, '-_', '+/'));
 

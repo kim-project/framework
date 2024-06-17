@@ -1,6 +1,6 @@
 <?php
 
-namespace Kim\Support\Database;
+namespace Kim\Database;
 
 class DB
 {
@@ -9,17 +9,12 @@ class DB
      */
     private static \mysqli|\PDO $connection;
 
-    public static function connect(): void
-    {
-
-    }
-
     /**
-     * Create connection to database
+     * Get the connection
      *
      * @return \mysqli|\PDO Database connection
      */
-    private static function conn(): \mysqli|\PDO
+    private static function core(): \mysqli|\PDO
     {
         if (isset(self::$connection)) {
             return self::$connection;
@@ -66,16 +61,6 @@ class DB
     }
 
     /**
-     * Get the connection
-     *
-     * @return \mysqli|\PDO Database connection
-     */
-    public static function core(): \mysqli|\PDO
-    {
-        return self::conn();
-    }
-
-    /**
      * Close the connection
      *
      * @return bool
@@ -99,7 +84,7 @@ class DB
      */
     public static function sql(string $sql): bool|\mysqli_result|int
     {
-        $conn = self::conn();
+        $conn = self::core();
         if($conn instanceof \PDO) {
             try {
                 return $conn->exec($sql);
@@ -121,7 +106,7 @@ class DB
      */
     public static function fetch(string $sql): array
     {
-        $conn = self::conn();
+        $conn = self::core();
         $response = [];
         if($conn instanceof \PDO) {
             try {
@@ -148,7 +133,7 @@ class DB
      */
     public static function first(string $sql): array|null
     {
-        $conn = self::conn();
+        $conn = self::core();
         $response = [];
         if($conn instanceof \PDO) {
             try {

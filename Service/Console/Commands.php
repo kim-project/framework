@@ -1,12 +1,12 @@
 <?php
 
-namespace Kim\Support\Provider;
+namespace Kim\Console;
 
-use Kim\Support\Helpers\File;
+use Kim\Support\File;
 
 class Commands
 {
-    private const Kim = "\x1b[36m\n_________ ______________  ___\n _____  //_/___  _/__   |/  /\n  ___  ,<   __  / __  /|_/ /\n   _  /| | __/ /  _  /  / /\n   /_/ |_| /___/  /_/  /_/\n\n\n\x1b[37m";
+    private const KIM = "\x1b[36m\n_________ ______________  ___\n _____  //_/___  _/__   |/  /\n  ___  ,<   __  / __  /|_/ /\n   _  /| | __/ /  _  /  / /\n   /_/ |_| /___/  /_/  /_/\n\n\n\x1b[0m";
 
     private static function parseName(string $name, string $type): array
     {
@@ -35,12 +35,12 @@ class Commands
         fwrite($myfile, str_replace(
             $search,
             $replace,
-            file_get_contents(__DIR__.'/../Template/'.$template)
+            file_get_contents(__DIR__.'/Template/'.$template)
         ));
         fclose($myfile);
     }
 
-    public static function CreateController(): void
+    public static function createController(): void
     {
         echo "\n\x1b[33m[\x1b[36m  Making a controller \x1b[33m]\n\n\n\x1b[38;5;225m";
         $parse = self::parseName(readline("\x1b[35mEnter Controller Name\x1b[33m:").'Controller', 'Controllers');
@@ -62,7 +62,7 @@ class Commands
         echo "\x1b[37mCreated Successfully.\n\x1b[0m";
     }
 
-    public static function CreateModel(): void
+    public static function createModel(): void
     {
         echo "\n\x1b[33m[\x1b[36m  Making a model \x1b[33m]\n\n\n\x1b[38;5;225m";
         $parse = self::parseName(readline("\x1b[35mEnter Model Name\x1b[33m:"), 'Models');
@@ -84,7 +84,7 @@ class Commands
         echo "\x1b[37mCreated Successfully.\n\x1b[0m";
     }
 
-    public static function CreateView(): void
+    public static function createView(): void
     {
         echo "\n\x1b[33m[\x1b[36m  Making a View \x1b[33m]\n\n\n\x1b[38;5;225m";
         $parse = self::parseName(readline("\x1b[35mEnter View Name\x1b[33m:"), 'Views');
@@ -102,13 +102,13 @@ class Commands
         echo "\x1b[37mCreated Successfully.\n\x1b[0m";
     }
 
-    public static function Start(): void
+    public static function start(): void
     {
-        echo self::Kim."Server Running at [http://localhost:8000]\n\n";
+        echo self::KIM."\x1b[37mServer Running at [http://localhost:8000]\n\n";
         shell_exec('php -S localhost:8000 app.php');
     }
 
-    public static function Update(): void
+    public static function update(): void
     {
         $raw = 'https://raw.githubusercontent.com/kim-project/framework/master';
         ini_set('allow_url_fopen', 1);
@@ -144,7 +144,7 @@ class Commands
         }
     }
 
-    public static function KeyGen(): string
+    public static function keyGen(): string
     {
         $ini = parse_ini_file(__ROOT__.'/.env');
         $secret = rtrim(base64_encode(random_bytes(64)), '=');
@@ -159,8 +159,8 @@ class Commands
         return $secret;
     }
 
-    public static function Kim(): void
+    public static function kim(): void
     {
-        echo self::Kim;
+        echo self::KIM;
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Kim\Support\Provider;
+namespace Kim\Provider;
 
-use Kim\Service\Request\Request;
-use Kim\Support\Helpers\Response;
+use Kim\Request\Request;
+use Kim\Support\Response;
 
 interface Middleware
 {

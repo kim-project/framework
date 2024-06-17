@@ -9,29 +9,25 @@ class Autoload
         'Service/Env.php',
     ];
 
-    private static function parseClassName(string $class): array
-    {
-        return array_values(
-            array_filter(
-                explode('\\', $class)
-            )
-        );
-    }
+    private static array $autoload = [
+        'Psr\\Http\\Server\\' => 'Service/Psr/Server/',
+        'Kim\\' => 'Service/',
+    ];
 
-    private static function getClass(string $class): ?string
+    private static function getClass(string $class)
     {
-        $path = self::parseClassName($class);
-        if ($path[0] === 'app') {
-            return implode('/', $path).'.php';
-        } elseif ($path[0] === 'Kim') {
-            if ($path[1] === 'Service' || $path[1] === 'Support') {
-                return 'Service/'.implode('/', array_slice($path, 2)).'.php';
+        foreach (self::$autoload as $namespace => $dir) {
+            if(str_starts_with($class, $namespace)) {
+                $file = $dir.substr($class, strlen($namespace)).'.php';
+                if (file_exists($file)) {
+                    return $file;
+                }
             }
-
-            return null;
         }
-
-        return null;
+        if (file_exists($class.'.php')) {
+            return $class.'.php';
+        }
+        return;
     }
 
     public static function register(): void

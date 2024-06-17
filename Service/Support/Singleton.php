@@ -1,6 +1,6 @@
 <?php
 
-namespace Kim\Support\Helpers;
+namespace Kim\Support;
 
 trait Singleton
 {

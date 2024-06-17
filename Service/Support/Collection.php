@@ -1,6 +1,6 @@
 <?php
 
-namespace Kim\Support\Helpers;
+namespace Kim\Support;
 
 class Collection
 {
@@ -11,9 +11,9 @@ class Collection
      */
     protected array $collection;
 
-    public function __construct(array $collection)
+    public function __construct(array $collect)
     {
-        $this->collection = $collection;
+        $this->collection = $collect;
     }
 
     /**

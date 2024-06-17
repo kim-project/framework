@@ -2,11 +2,11 @@
 
 namespace namespace:;
 
-use Kim\Support\Database\DB;
-use Kim\Support\Database\Model;
+use Kim\Database\DB;
+use Kim\Database\Model;
 
 class name: extends Model {
-    
+
     protected string \$table = 'table:';
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-use Kim\Support\Helpers\Config;
+use Kim\Support\Config;
 
 /**
  * Load the .env file

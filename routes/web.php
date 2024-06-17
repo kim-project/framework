@@ -1,8 +1,8 @@
 <?php
 
 use app\Controllers\UserController;
-use Kim\Service\Router\Route;
-use Kim\Service\Router\Router;
+use Kim\Router\Route;
+use Kim\Router\Router;
 
 Router::get('/', function () {
     return response()->view('home.php', []);

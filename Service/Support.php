@@ -1,9 +1,9 @@
 <?php
 
-use Kim\Service\Auth\JWT;
-use Kim\Support\Helpers\Collection;
-use Kim\Support\Helpers\File;
-use Kim\Support\Helpers\Response;
+use Kim\Auth\JWT;
+use Kim\Support\Collection;
+use Kim\Support\File;
+use Kim\Support\Response;
 
 /**
  * Get the error message of the error code

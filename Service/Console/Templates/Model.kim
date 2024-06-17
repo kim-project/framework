@@ -2,7 +2,7 @@
 
 namespace namespace:;
 
-use Kim\Support\Database\DB;
+use Kim\Database\DB;
 
 class name: {
 

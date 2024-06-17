@@ -3,7 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\User;
-use Kim\Support\Database\DB;
+use Kim\Database\DB;
 
 class UserController extends Controller
 {
@@ -74,7 +74,7 @@ class UserController extends Controller
 
             $name = $_POST['name'];
             $pass = password_hash($_POST['password'], PASSWORD_BCRYPT);
-            DB::sql("INSERT INTO user (`name`, `email`, `password`) VALUES ('$name', '$email', '$pass')");
+            DB::sql("INSERT INTO user (name, email, password) VALUES ('$name', '$email', '$pass')");
             return response()->redirect('/login');
         } else {
             return response()->view('Signup.php', [
