@@ -1,6 +1,6 @@
 <?php
 
-namespace Kim\Support;
+namespace Kim\Provider;
 
 trait Singleton
 {
@@ -26,10 +26,10 @@ trait Singleton
      *
      * @return self The instance
      */
-    public static function getInstance(): self
+    public static function getInstance(...$args): self
     {
         return isset(static::$instance)
             ? static::$instance
-            : static::$instance = new static();
+            : static::$instance = new static(...$args);
     }
 }

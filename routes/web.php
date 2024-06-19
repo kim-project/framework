@@ -1,10 +1,11 @@
 <?php
 
 use app\Controllers\UserController;
+use Kim\Request\Request;
 use Kim\Router\Route;
 use Kim\Router\Router;
 
-Router::get('/', function () {
+Router::get('/', function (Request $request) {
     return response()->view('home.php', []);
 });
 Router::controller('/', UserController::class, [

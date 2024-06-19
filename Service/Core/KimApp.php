@@ -3,7 +3,7 @@
 namespace Kim\Core;
 
 use Kim\Request\Request;
-use Kim\Support\Singleton;
+use Kim\Provider\Singleton;
 
 class KimApp
 {
@@ -26,7 +26,8 @@ class KimApp
     {
         session_start();
 
-        $this->request = Request::getRequest();
+        $container = Container::getInstance();
+        $this->request = $container->get(Request::class);
         $this->route = array_values(
             array_filter(
                 explode('/', strtolower($this->request->route))

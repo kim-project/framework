@@ -3,7 +3,7 @@
 namespace Kim\Request;
 
 use Kim\Support\Arrayable;
-use Kim\Support\Singleton;
+use Kim\Provider\Singleton;
 
 class Request
 {

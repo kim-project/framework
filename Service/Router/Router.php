@@ -4,7 +4,7 @@ namespace Kim\Router;
 
 use Kim\Core\KimApp;
 use Kim\Support\Response;
-use Kim\Support\Singleton;
+use Kim\Provider\Singleton;
 use Kim\Provider\Controller;
 
 class Router
@@ -18,7 +18,7 @@ class Router
         $this->server = KimApp::getInstance();
     }
 
-    private function parseParam(\ReflectionMethod|\ReflectionFunction $f, array $data): array
+    private function parseParam(\ReflectionFunctionAbstract $f, array $data): array
     {
         $result = array();
         foreach ($f->getParameters() as $param) {

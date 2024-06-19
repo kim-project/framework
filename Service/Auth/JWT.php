@@ -2,7 +2,7 @@
 
 namespace Kim\Auth;
 
-use Kim\Support\Singleton;
+use Kim\Provider\Singleton;
 use Kim\Console\Commands;
 
 class JWT
