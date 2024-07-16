@@ -5,6 +5,7 @@
   - [Creating subdirectories](#creating-subdirectories)
   - [Creating Manually](#creating-manually)
 - [Structure](#structure)
+  - [Passing Data](#passing-data)
 
 ## Introduction
 
@@ -138,9 +139,39 @@ Now if we go to the file we just created we will see the following code
 now we have a view which we can pass to response  
 
 ```php
-response()->View('Blog/User.php', []);
+response()->view('Blog/User.php', []);
 ```
 
 which will result in the `User.php` file to be rendered  
   
 Now we can put our own `HTML` code inside the file
+
+### Passing Data
+
+You can receive the passed data in the view and use them with the `$data` variable
+  
+You can pass the data to the view by using this code in the controller
+
+```php
+$array = [
+  'page' => 12
+];
+
+response()->view('Blog/User.php', $array);
+```
+
+and use them in the view like this
+
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+</head>
+<body>
+    page: <?php echo $data['page'] ?>
+</body>
+</html>
+```
