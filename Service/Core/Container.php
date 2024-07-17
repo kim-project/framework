@@ -36,7 +36,10 @@ class Container implements ContainerInterface
     private function resolve(string $id)
     {
         $class = new \ReflectionClass($id);
-        $params = $this->autowire($class->getConstructor());
+        $params = [];
+        if ($class->getConstructor() !== null) {
+            $params = $this->autowire($class->getConstructor());
+        }
 
         if (in_array(Singleton::class, $class->getTraitNames())) {
             $this->instances[$id] = $id::getInstance(...$params);

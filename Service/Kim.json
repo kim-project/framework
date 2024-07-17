@@ -1,5 +1,5 @@
 {
-    "version": "0.7.0",
+    "version": "0.7.3",
     "files": [
         "/.env.example",
         "/.htaccess",
@@ -16,23 +16,33 @@
         "/Service/Console/Template/Model.kim",
         "/Service/Console/Template/ORM.kim",
         "/Service/Console/Template/View.kim",
+        "/Service/Core/Exeptions/ContainerException.php",
+        "/Service/Core/Container.php",
         "/Service/Core/KimApp.php",
         "/Service/Database/DB.php",
         "/Service/Database/Model.php",
         "/Service/Provider/Controller.php",
         "/Service/Provider/View.php",
         "/Service/Provider/Middleware.php",
+        "/Service/Provider/Singleton.php",
+        "/Service/Psr/Cache/CacheException.php",
+        "/Service/Psr/Cache/CacheItemInterface.php",
+        "/Service/Psr/Cache/CacheItemPoolInterface.php",
+        "/Service/Psr/Cache/InvalidArgumentException.php",
+        "/Service/Psr/Container/ContainerExceptionInterface.php",
+        "/Service/Psr/Container/ContainerInterface.php",
+        "/Service/Psr/Container/NotFoundExceptionInterface.php",
         "/Service/Request/UploadedFile.php",
         "/Service/Request/Request.php",
         "/Service/Request/Validator.php",
         "/Service/Router/MiddlewareHandle.php",
         "/Service/Router/Route.php",
+        "/Service/Router/RouteCache.php",
         "/Service/Router/Router.php",
         "/Service/Support/Arrayable.php",
         "/Service/Support/Collection.php",
         "/Service/Support/Config.php",
         "/Service/Support/File.php",
-        "/Service/Support/Response.php",
-        "/Service/Support/Singleton.php"
+        "/Service/Support/Response.php"
     ]
 }

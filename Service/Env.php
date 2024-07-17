@@ -9,10 +9,10 @@ use Kim\Support\Config;
  */
 function loadEnv(): void
 {
-    if (!file_exists(__ROOT__.'/.env')) {
+    if (!file_exists(ROOT.'/.env')) {
         return;
     }
-    $conf = parse_ini_file(__ROOT__.'/.env');
+    $conf = parse_ini_file(ROOT.'/.env');
     foreach ($conf as $key => $val) {
         if(isset($val) && $val !== '') {
             putenv("$key=$val");

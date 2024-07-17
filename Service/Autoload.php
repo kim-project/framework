@@ -10,7 +10,6 @@ class Autoload
     ];
 
     private static array $autoload = [
-        'Psr\\Http\\Server\\' => 'Service/Psr/Server/',
         'Psr\\' => 'Service/Psr/',
         'Kim\\' => 'Service/',
     ];

@@ -7,18 +7,29 @@ trait Singleton
     /**
      * @var object The instance of the singleton
      */
-    protected static object $instance;
+    protected static ?self $instance = null;
 
-    protected function __construct()
+    /**
+     * is not allowed to call from outside to prevent from creating multiple instances,
+     * to use the singleton, you have to obtain the instance from Singleton::getInstance() instead
+     */
+    private function __construct()
     {
     }
 
-    private function __clone(): void
+    /**
+     * prevent the instance from being cloned (which would create a second instance of it)
+     */
+    private function __clone()
     {
     }
 
-    final public function __wakeup(): void
+    /**
+     * prevent from being unserialized (which would create a second instance of it)
+     */
+    public function __wakeup()
     {
+        throw new \Exception("Cannot unserialize singleton");
     }
 
     /**
@@ -28,8 +39,10 @@ trait Singleton
      */
     public static function getInstance(...$args): self
     {
-        return isset(static::$instance)
-            ? static::$instance
-            : static::$instance = new static(...$args);
+        if (self::$instance === null) {
+            self::$instance = new self(...$args);
+        }
+
+        return self::$instance;
     }
 }

@@ -9,7 +9,7 @@ class Request
 {
     use Arrayable, Singleton {Singleton::getInstance as getRequest;}
 
-    private static array $php_input;
+    private string $php_input;
 
     public string $method;
 
@@ -46,6 +46,11 @@ class Request
 
             $this->request = $this->parseInput();
 
+            if($this->method === 'PUT') {
+                $GLOBALS['_PUT'] = (array) $this->request;
+            } elseif ($this->method === 'DELETE') {
+                $GLOBALS['_DELETE'] = (array) $this->request;
+            }
         }
 
         $this->getRequestHeaders();
@@ -74,19 +79,24 @@ class Request
     private function parseInput(): array
     {
         $result = [];
-        $raw = file_get_contents('php://input');
+        $this->php_input = file_get_contents('php://input');
 
         switch (explode(';', $_SERVER['CONTENT_TYPE'])[0]) {
             case 'application/json':
-                $result = json_decode($raw, true);
+                $result = json_decode($this->php_input, true);
                 break;
 
             case 'application/x-www-form-urlencoded':
-                parse_str($raw, $result);
+                parse_str($this->php_input, $result);
                 break;
         }
 
         return $result;
+    }
+
+    public function rawBody(): string
+    {
+        return $this->php_input;
     }
 
     public function file(string|array $field): ?UploadedFile

@@ -2,6 +2,7 @@
 
 namespace Kim\Console;
 
+use Kim\Router\RouteCache;
 use Kim\Support\File;
 
 class Commands
@@ -35,7 +36,7 @@ class Commands
         fwrite($myfile, str_replace(
             $search,
             $replace,
-            file_get_contents(__DIR__.'/Template/'.$template)
+            file_get_contents(__DIR__.'/Templates/'.$template)
         ));
         fclose($myfile);
     }
@@ -102,6 +103,18 @@ class Commands
         echo "\x1b[37mCreated Successfully.\n\x1b[0m";
     }
 
+    public static function cacheRoute(): void
+    {
+        echo self::KIM."\x1b[37mCaching Routes...\n\n";
+        $_SERVER['CACHING_ROUTES'] = true;
+        if (! file_exists('./cache/')) {
+            mkdir('./cache');
+        }
+        require './app.php';
+        RouteCache::save();
+        echo "Cache files created successfully\n\n";
+    }
+
     public static function start(): void
     {
         echo self::KIM."\x1b[37mServer Running at [http://localhost:8000]\n\n";
@@ -122,7 +135,7 @@ class Commands
             foreach ($Kim['files'] as $file) {
                 echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[0mChecking file '\x1b[33m$file\x1b[0m'...\n";
                 $cont = file_get_contents($raw.$file);
-                if (file_exists(__ROOT__.$file)) {
+                if (file_exists(ROOT.$file)) {
                     $f = new File($file);
                     if ($f->read() !== $cont) {
                         echo "\x1b[33m[\x1b[0m$i\x1b[33m\\\x1b[0m$count\x1b[33m] \x1b[36mUpdating file '\x1b[33m$file\x1b[36m'...";
@@ -146,7 +159,7 @@ class Commands
 
     public static function keyGen(): string
     {
-        $ini = parse_ini_file(__ROOT__.'/.env');
+        $ini = parse_ini_file(ROOT.'/.env');
         $secret = rtrim(base64_encode(random_bytes(64)), '=');
         unset($ini['APP_SECRET']);
 
@@ -154,7 +167,7 @@ class Commands
             return "$k=$v";
         }, array_keys($ini), array_values($ini));
 
-        file_put_contents(__ROOT__.'/.env', 'APP_SECRET='.$secret.PHP_EOL.implode(PHP_EOL, $ini)).PHP_EOL;
+        file_put_contents(ROOT.'/.env', 'APP_SECRET='.$secret.PHP_EOL.implode(PHP_EOL, $ini)).PHP_EOL;
 
         return $secret;
     }
